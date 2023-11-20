@@ -3,6 +3,7 @@ package com.github.theword;
 import com.github.theword.returnBody.MessageReturnBody;
 import com.github.theword.returnBody.MinecraftReturnBody;
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -29,11 +30,12 @@ public class Utils {
 
         Gson gson = new Gson();
         MinecraftReturnBody minecraftReturnBody = gson.fromJson(message, MinecraftReturnBody.class);
-
+        JsonElement data = minecraftReturnBody.getData();
         switch (minecraftReturnBody.getApi()) {
             case "broadcast":
-                TextComponent textComponent = parseMessageToTextComponent(gson.fromJson(minecraftReturnBody.getData(), MessageReturnBody.class));
+                TextComponent textComponent = parseMessageToTextComponent(gson.fromJson(data, MessageReturnBody.class));
                 instance.getServer().spigot().broadcast(textComponent);
+                break;
         }
     }
 
