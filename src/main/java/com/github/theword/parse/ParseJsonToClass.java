@@ -81,8 +81,4 @@ public class ParseJsonToClass {
 
     }
 
-
-    public static void parseMessageToSendTitle() {
-
-    }
 }

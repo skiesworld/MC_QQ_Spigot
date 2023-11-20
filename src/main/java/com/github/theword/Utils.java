@@ -2,14 +2,16 @@ package com.github.theword;
 
 import com.github.theword.returnBody.MessageReturnBody;
 import com.github.theword.returnBody.BaseReturnBody;
+import com.github.theword.returnBody.SendTitleReturnBody;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 import static com.github.theword.MC_QQ.instance;
-import static com.github.theword.parse.ParseJsonToClass.parseMessageToTextComponent;
+import static com.github.theword.parse.ParseJsonToClass.*;
 
 public class Utils {
 
@@ -37,7 +39,16 @@ public class Utils {
                 instance.getServer().spigot().broadcast(textComponent);
                 break;
             case "sendTitle":
-
+                SendTitleReturnBody sendTitleReturnBody = gson.fromJson(data, SendTitleReturnBody.class);
+                for (Player player : instance.getServer().getOnlinePlayers()) {
+                    player.sendTitle(
+                            sendTitleReturnBody.getSendTitle().getTitle(),
+                            sendTitleReturnBody.getSendTitle().getSubtitle(),
+                            sendTitleReturnBody.getSendTitle().getFadein(),
+                            sendTitleReturnBody.getSendTitle().getStay(),
+                            sendTitleReturnBody.getSendTitle().getFadeout()
+                    );
+                }
                 break;
         }
     }
