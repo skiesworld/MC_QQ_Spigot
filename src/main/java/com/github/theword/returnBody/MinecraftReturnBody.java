@@ -1,15 +1,17 @@
 package com.github.theword.returnBody;
 
+import com.google.gson.JsonElement;
+
 public class MinecraftReturnBody {
 
     private String api;
 
-    private String data;
+    private JsonElement data;
 
     public MinecraftReturnBody() {
     }
 
-    public MinecraftReturnBody(String api, String data) {
+    public MinecraftReturnBody(String api, JsonElement data) {
         this.api = api;
         this.data = data;
     }
@@ -30,11 +32,11 @@ public class MinecraftReturnBody {
         this.api = api;
     }
 
-    public String getData() {
+    public JsonElement getData() {
         return data;
     }
 
-    public void setData(String data) {
+    public void setData(JsonElement data) {
         this.data = data;
     }
 }
