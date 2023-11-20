@@ -12,7 +12,7 @@
 
 # Add target directory to ignore list
 target/
-
+.idea/
 # Package Files #
 *.jar
 *.war
