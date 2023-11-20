@@ -8,7 +8,6 @@ public class SendTitle {
 
     private String title;
 
-    @SerializedName("sub_title")
     private String subtitle;
 
     private int fadein;

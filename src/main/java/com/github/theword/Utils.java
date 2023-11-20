@@ -1,5 +1,6 @@
 package com.github.theword;
 
+import com.github.theword.returnBody.ActionbarReturnBody;
 import com.github.theword.returnBody.MessageReturnBody;
 import com.github.theword.returnBody.BaseReturnBody;
 import com.github.theword.returnBody.SendTitleReturnBody;
@@ -11,6 +12,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import static com.github.theword.MC_QQ.instance;
+
+import net.md_5.bungee.api.ChatMessageType;
+
 import static com.github.theword.parse.ParseJsonToClass.*;
 
 public class Utils {
@@ -38,7 +42,7 @@ public class Utils {
                 TextComponent textComponent = parseMessageToTextComponent(gson.fromJson(data, MessageReturnBody.class));
                 instance.getServer().spigot().broadcast(textComponent);
                 break;
-            case "sendTitle":
+            case "send_title":
                 SendTitleReturnBody sendTitleReturnBody = gson.fromJson(data, SendTitleReturnBody.class);
                 for (Player player : instance.getServer().getOnlinePlayers()) {
                     player.sendTitle(
@@ -50,9 +54,17 @@ public class Utils {
                     );
                 }
                 break;
+            case "actionbar":
+                for (Player player : instance.getServer().getOnlinePlayers()) {
+                    sendActionBar(player, gson.fromJson(data, ActionbarReturnBody.class).getText());
+                }
+                break;
         }
     }
 
+    static void sendActionBar(Player player, String message) {
+        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(message));
+    }
 
     /**
      * 字符串转为 unicode 编码
