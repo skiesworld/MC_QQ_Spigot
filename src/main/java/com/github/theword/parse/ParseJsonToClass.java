@@ -23,7 +23,7 @@ public class ParseJsonToClass {
         component.setColor(ChatColor.YELLOW);
         StringBuilder msgLogText = new StringBuilder();
 
-        for (MsgItem msgItem : messageReturnBody.getMessage()) {
+        for (MsgItem msgItem : messageReturnBody.getMessageList()) {
             TextComponent msgComponent = new TextComponent();
             msgComponent.setText(msgItem.getMsgText());
             msgComponent.setColor(getColor(msgItem.getColor()));
