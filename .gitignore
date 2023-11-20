@@ -10,6 +10,9 @@
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
+# Add target directory to ignore list
+target/
+
 # Package Files #
 *.jar
 *.war
