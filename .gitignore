@@ -10,9 +10,12 @@
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
-# Add target directory to ignore list
+# Add unuseful directory to ignore list
 target/
 .idea/
+
+.MC_QQ_Spigot.iml
+
 # Package Files #
 *.jar
 *.war
