@@ -1,6 +1,5 @@
 package com.github.theword;
 
-import net.md_5.bungee.api.chat.TextComponent;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
 
@@ -8,7 +7,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 import static com.github.theword.MC_QQ.*;
-import static com.github.theword.Utils.processJsonMessage;
+import static com.github.theword.Utils.parseWebSocketJson;
 import static com.github.theword.Utils.say;
 
 public class WSClient extends WebSocketClient {
@@ -36,9 +35,7 @@ public class WSClient extends WebSocketClient {
     @Override
     public void onMessage(String message) {
         if (ConfigReader.getEnable()) {
-            System.out.println(message);
-            TextComponent textComponent = processJsonMessage(message);
-            instance.getServer().spigot().broadcast(textComponent);
+            parseWebSocketJson(message);
         }
     }
 

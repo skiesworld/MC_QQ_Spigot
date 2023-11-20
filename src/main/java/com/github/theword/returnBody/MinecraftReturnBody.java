@@ -1,23 +1,40 @@
 package com.github.theword.returnBody;
 
-import java.util.List;
-
 public class MinecraftReturnBody {
 
-    private List<MsgItem> message;
+    private String api;
 
-    public List<MsgItem> getMessage() {
-        return message;
+    private String data;
+
+    public MinecraftReturnBody() {
     }
 
-    public void setMessage(List<MsgItem> message) {
-        this.message = message;
+    public MinecraftReturnBody(String api, String data) {
+        this.api = api;
+        this.data = data;
     }
 
     @Override
     public String toString() {
         return "MinecraftReturnBody{" +
-                "message=" + message +
+                "api='" + api + '\'' +
+                ", data=" + data +
                 '}';
+    }
+
+    public String getApi() {
+        return api;
+    }
+
+    public void setApi(String api) {
+        this.api = api;
+    }
+
+    public String getData() {
+        return data;
+    }
+
+    public void setData(String data) {
+        this.data = data;
     }
 }

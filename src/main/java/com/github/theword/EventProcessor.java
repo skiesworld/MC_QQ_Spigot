@@ -9,7 +9,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import static com.github.theword.MC_QQ.wsClient;
-import static com.github.theword.Utils.processMessageToJson;
+import static com.github.theword.parse.ParseClassToJson.processMessageToJson;
 
 class EventProcessor implements Listener {
     /**

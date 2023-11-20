@@ -3,7 +3,7 @@ package com.github.theword;
 
 import org.bukkit.configuration.file.FileConfiguration;
 
-class ConfigReader {
+public class ConfigReader {
 
     /**
      * 获取配置文件信息
@@ -24,7 +24,7 @@ class ConfigReader {
      *
      * @return String serverName
      */
-    static String getServerName() {
+    public static String getServerName() {
         return config.getString("server_name", "Server");
     }
 
