@@ -1,7 +1,7 @@
 package com.github.theword;
 
 import com.github.theword.returnBody.MessageReturnBody;
-import com.github.theword.returnBody.MinecraftReturnBody;
+import com.github.theword.returnBody.BaseReturnBody;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -29,12 +29,15 @@ public class Utils {
         // 组合消息
 
         Gson gson = new Gson();
-        MinecraftReturnBody minecraftReturnBody = gson.fromJson(message, MinecraftReturnBody.class);
-        JsonElement data = minecraftReturnBody.getData();
-        switch (minecraftReturnBody.getApi()) {
+        BaseReturnBody baseReturnBody = gson.fromJson(message, BaseReturnBody.class);
+        JsonElement data = baseReturnBody.getData();
+        switch (baseReturnBody.getApi()) {
             case "broadcast":
                 TextComponent textComponent = parseMessageToTextComponent(gson.fromJson(data, MessageReturnBody.class));
                 instance.getServer().spigot().broadcast(textComponent);
+                break;
+            case "sendTitle":
+
                 break;
         }
     }

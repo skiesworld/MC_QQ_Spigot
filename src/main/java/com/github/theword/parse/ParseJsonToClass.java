@@ -1,7 +1,7 @@
 package com.github.theword.parse;
 
 import com.github.theword.returnBody.MessageReturnBody;
-import com.github.theword.returnBody.MsgItem;
+import com.github.theword.returnBody.returnModle.MsgItem;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.HoverEvent;
@@ -12,7 +12,12 @@ import static com.github.theword.Utils.say;
 
 public class ParseJsonToClass {
 
-
+    /**
+     * 将 MessageReturnBody 转换为 TextComponent
+     *
+     * @param messageReturnBody MessageReturnBody
+     * @return TextComponent
+     */
     public static TextComponent parseMessageToTextComponent(MessageReturnBody messageReturnBody) {
         TextComponent component = new TextComponent("[MC_QQ] ");
         component.setColor(ChatColor.YELLOW);
@@ -76,4 +81,8 @@ public class ParseJsonToClass {
 
     }
 
+
+    public static void parseMessageToSendTitle() {
+
+    }
 }
