@@ -16,7 +16,7 @@ public class SpigotEvent {
     @SerializedName("sub_type")
     private String subType;
 
-    private final Integer timestamp = (int) (System.currentTimeMillis() / 1000);
+    private final int timestamp = (int) (System.currentTimeMillis() / 1000);
 
     public Integer getTime() {
         return timestamp;
