@@ -1,38 +1,97 @@
 package com.github.theword.parse;
 
-import com.github.theword.returnBody.MessageReturnBody;
-import com.github.theword.returnBody.returnModle.MsgItem;
+import com.github.theword.returnBody.returnModle.MyBaseComponent;
+import com.github.theword.returnBody.returnModle.MyTextComponent;
 import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.chat.hover.content.Text;
+
+import java.util.List;
 
 import static com.github.theword.Utils.say;
 
 public class ParseJsonToClass {
 
     /**
-     * 将 MessageReturnBody 转换为 TextComponent
+     * 将 MyBaseComponent 转换为 TextComponent
      *
-     * @param messageReturnBody MessageReturnBody
+     * @param myBaseComponentList 消息列表
      * @return TextComponent
      */
-    public static TextComponent parseMessageToTextComponent(MessageReturnBody messageReturnBody) {
-        TextComponent component = new TextComponent("[MC_QQ] ");
-        component.setColor(ChatColor.YELLOW);
+    public static TextComponent parseMessageToTextComponent(List<? extends MyBaseComponent> myBaseComponentList) {
+        TextComponent component = new TextComponent();
         StringBuilder msgLogText = new StringBuilder();
 
-        for (MsgItem msgItem : messageReturnBody.getMessageList()) {
+        for (MyBaseComponent myBaseComponent : myBaseComponentList) {
             TextComponent msgComponent = new TextComponent();
-            msgComponent.setText(msgItem.getMsgText());
-            msgComponent.setColor(getColor(msgItem.getColor()));
-            if (msgItem.getActionEvent() != null) {
-                msgComponent.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, msgItem.getActionEvent().getClickEventUrl()));
-                msgComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(msgItem.getActionEvent().getHoverEventText())));
+
+            // 配置 BaseComponent 基本属性
+            msgComponent.setText(myBaseComponent.getText());
+            msgComponent.setColor(getColor(myBaseComponent.getColor()));
+            msgComponent.setBold(myBaseComponent.isBold());
+            msgComponent.setItalic(myBaseComponent.isItalic());
+            msgComponent.setUnderlined(myBaseComponent.isUnderlined());
+            msgComponent.setStrikethrough(myBaseComponent.isStrikethrough());
+            msgComponent.setObfuscated(myBaseComponent.isObfuscated());
+
+            // 配置 TextComponent 额外属性
+            if (myBaseComponent instanceof MyTextComponent) {
+                MyTextComponent myTextComponent = (MyTextComponent) myBaseComponent;
+                if (myTextComponent.getClickEvent() != null) {
+                    ClickEvent.Action tempAction = null;
+                    switch (myTextComponent.getClickEvent().getAction()) {
+                        case "open_url":
+                            tempAction = ClickEvent.Action.OPEN_URL;
+                            break;
+                        case "open_file":
+                            tempAction = ClickEvent.Action.OPEN_FILE;
+                            break;
+                        case "run_command":
+                            tempAction = ClickEvent.Action.RUN_COMMAND;
+                            break;
+                        case "suggest_command":
+                            tempAction = ClickEvent.Action.SUGGEST_COMMAND;
+                            break;
+                        case "change_page":
+                            tempAction = ClickEvent.Action.CHANGE_PAGE;
+                            break;
+                        case "copy_to_clipboard":
+                            tempAction = ClickEvent.Action.COPY_TO_CLIPBOARD;
+                            break;
+                        default:
+                            break;
+                    }
+                    ClickEvent clickEvent = new ClickEvent(tempAction, myTextComponent.getClickEvent().getValue());
+                    msgComponent.setClickEvent(clickEvent);
+                }
+                // TODO 悬浮事件待完善
+                if (myTextComponent.getHoverEvent() != null) {
+                    HoverEvent hoverEvent = null;
+                    switch (myTextComponent.getHoverEvent().getAction()) {
+                        case "show_text":
+                            TextComponent textComponent = parseMessageToTextComponent(myTextComponent.getHoverEvent().getBaseComponentList());
+                            BaseComponent[] baseComponent = new BaseComponent[]{textComponent};
+                            hoverEvent = new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(baseComponent));
+                            break;
+                        case "show_item":
+//                            hoverEvent = new HoverEvent(HoverEvent.Action.SHOW_ITEM, new Item());
+                            break;
+                        case "show_entity":
+//                            hoverEvent = new HoverEvent(HoverEvent.Action.SHOW_ENTITY, new Entity());
+                            break;
+                        default:
+                            break;
+                    }
+                    msgComponent.setHoverEvent(hoverEvent);
+                }
             }
+
+
             component.addExtra(msgComponent);
-            msgLogText.append(msgItem.getMsgText());
+            msgLogText.append(myBaseComponent.getText());
         }
         say(msgLogText.toString());
         return component;

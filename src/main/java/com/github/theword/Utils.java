@@ -1,21 +1,19 @@
 package com.github.theword;
 
 import com.github.theword.returnBody.ActionbarReturnBody;
-import com.github.theword.returnBody.MessageReturnBody;
 import com.github.theword.returnBody.BaseReturnBody;
+import com.github.theword.returnBody.MessageReturnBody;
 import com.github.theword.returnBody.SendTitleReturnBody;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
+import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import static com.github.theword.MC_QQ.instance;
-
-import net.md_5.bungee.api.ChatMessageType;
-
-import static com.github.theword.parse.ParseJsonToClass.*;
+import static com.github.theword.parse.ParseJsonToClass.parseMessageToTextComponent;
 
 public class Utils {
 
@@ -33,13 +31,13 @@ public class Utils {
      */
     static void parseWebSocketJson(String message) {
         // 组合消息
-
         Gson gson = new Gson();
         BaseReturnBody baseReturnBody = gson.fromJson(message, BaseReturnBody.class);
         JsonElement data = baseReturnBody.getData();
         switch (baseReturnBody.getApi()) {
             case "broadcast":
-                TextComponent textComponent = parseMessageToTextComponent(gson.fromJson(data, MessageReturnBody.class));
+                MessageReturnBody messageList = gson.fromJson(data, MessageReturnBody.class);
+                TextComponent textComponent = parseMessageToTextComponent(messageList.getMessageList());
                 instance.getServer().spigot().broadcast(textComponent);
                 break;
             case "send_title":
@@ -55,15 +53,17 @@ public class Utils {
                 }
                 break;
             case "actionbar":
+                ActionbarReturnBody actionMessageList = gson.fromJson(data, ActionbarReturnBody.class);
+                TextComponent actionTextComponent = parseMessageToTextComponent(actionMessageList.getMessageList());
                 for (Player player : instance.getServer().getOnlinePlayers()) {
-                    sendActionBar(player, gson.fromJson(data, ActionbarReturnBody.class).getText());
+                    sendActionBar(player, actionTextComponent);
                 }
                 break;
         }
     }
 
-    static void sendActionBar(Player player, String message) {
-        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(message));
+    static void sendActionBar(Player player, TextComponent textComponent) {
+        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, textComponent);
     }
 
     /**

@@ -1,6 +1,7 @@
 package com.github.theword.returnBody;
 
-import com.github.theword.returnBody.returnModle.MsgItem;
+import com.github.theword.returnBody.returnModle.MyBaseComponent;
+import com.github.theword.returnBody.returnModle.MyTextComponent;
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 
@@ -10,6 +11,6 @@ import java.util.List;
 public class MessageReturnBody {
 
     @SerializedName("message_list")
-    private List<MsgItem> messageList;
+    private List<MyTextComponent> messageList;
 
 }
