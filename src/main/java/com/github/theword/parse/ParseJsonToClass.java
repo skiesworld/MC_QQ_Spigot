@@ -91,7 +91,9 @@ public class ParseJsonToClass {
 
 
             component.addExtra(msgComponent);
-            msgLogText.append(myBaseComponent.getText());
+            if (!myBaseComponent.getColor().equals("[MC_QQ]")) {
+                msgLogText.append(myBaseComponent.getText());
+            }
         }
         say(msgLogText.toString());
         return component;
