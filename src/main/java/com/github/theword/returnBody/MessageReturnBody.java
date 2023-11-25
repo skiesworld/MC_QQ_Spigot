@@ -1,6 +1,5 @@
 package com.github.theword.returnBody;
 
-import com.github.theword.returnBody.returnModle.MyBaseComponent;
 import com.github.theword.returnBody.returnModle.MyTextComponent;
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
