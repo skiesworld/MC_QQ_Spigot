@@ -83,7 +83,6 @@ public class ParseClassToJson {
                 player.getTotalExperience(),
                 player.getLevel(),
                 player.getLocale(),
-                player.getPing(),
                 player.getPlayerTime(),
                 player.isPlayerTimeRelative(),
                 player.getPlayerTimeOffset(),

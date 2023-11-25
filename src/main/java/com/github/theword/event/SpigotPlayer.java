@@ -30,7 +30,6 @@ public class SpigotPlayer {
 
     private String locale;
 
-    private int ping;
     @SerializedName("player_time")
     private long playerTime;
     @SerializedName("is_player_time_relative")
@@ -52,7 +51,7 @@ public class SpigotPlayer {
     @SerializedName("is_op")
     private boolean isOp;
 
-    public SpigotPlayer(String uuid, String nickname, String displayName, String playerListName, String address, boolean isHealthScaled, double healthScale, float exp, int totalExp, int level, String locale, int ping, long playerTime, boolean isPlayerTimeRelative, long playerTimeOffset, float walkSpeed, float flySpeed, boolean allowFlight, boolean isSprinting, boolean isSneaking, boolean isFlying, boolean isOp) {
+    public SpigotPlayer(String uuid, String nickname, String displayName, String playerListName, String address, boolean isHealthScaled, double healthScale, float exp, int totalExp, int level, String locale, long playerTime, boolean isPlayerTimeRelative, long playerTimeOffset, float walkSpeed, float flySpeed, boolean allowFlight, boolean isSprinting, boolean isSneaking, boolean isFlying, boolean isOp) {
         this.uuid = uuid;
         this.nickname = nickname;
         this.displayName = displayName;
@@ -64,7 +63,6 @@ public class SpigotPlayer {
         this.totalExp = totalExp;
         this.level = level;
         this.locale = locale;
-        this.ping = ping;
         this.playerTime = playerTime;
         this.isPlayerTimeRelative = isPlayerTimeRelative;
         this.playerTimeOffset = playerTimeOffset;
