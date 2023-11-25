@@ -47,15 +47,6 @@ public class ConfigReader {
     }
 
     /**
-     * 获取聊天修饰
-     *
-     * @return String SayWay
-     */
-    static String getSayWay() {
-        return config.getString("say_way", "说：");
-    }
-
-    /**
      * 获取是否启用命令监听
      *
      * @return boolean Command
