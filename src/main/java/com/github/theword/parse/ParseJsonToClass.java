@@ -7,7 +7,6 @@ import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
-import net.md_5.bungee.api.chat.hover.content.Text;
 
 import java.util.List;
 
@@ -58,9 +57,6 @@ public class ParseJsonToClass {
                         case "change_page":
                             tempAction = ClickEvent.Action.CHANGE_PAGE;
                             break;
-                        case "copy_to_clipboard":
-                            tempAction = ClickEvent.Action.COPY_TO_CLIPBOARD;
-                            break;
                         default:
                             break;
                     }
@@ -74,7 +70,7 @@ public class ParseJsonToClass {
                         case "show_text":
                             TextComponent textComponent = parseMessageToTextComponent(myTextComponent.getHoverEvent().getBaseComponentList());
                             BaseComponent[] baseComponent = new BaseComponent[]{textComponent};
-                            hoverEvent = new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(baseComponent));
+                            hoverEvent = new HoverEvent(HoverEvent.Action.SHOW_TEXT, baseComponent);
                             break;
                         case "show_item":
 //                            hoverEvent = new HoverEvent(HoverEvent.Action.SHOW_ITEM, new Item());
