@@ -7,13 +7,8 @@ enable_mc_qq: true
 enable_reconnect_msg: true
 
 # 请在冒号后填写 WebSocket 地址。
-# 若不填写，则地址 ws://127.0.0.1:8080/mcqq
-#
-# 若使用插件，请填写：ws://127.0.0.1:8080/mcqq
-#
-# 若使用适配器，请填写：ws://127.0.0.1:8080/minecraft/ws
-#
-websocket_url: "ws://127.0.0.1:8080/mcqq"
+# 默认：ws://127.0.0.1:8080/minecraft/ws
+websocket_url: "ws://127.0.0.1:8080/minecraft/ws"
 
 # 是否启用 玩家命令事件监听
 # 开启后，当玩家输入命令时，Bot 会推送命令信息
