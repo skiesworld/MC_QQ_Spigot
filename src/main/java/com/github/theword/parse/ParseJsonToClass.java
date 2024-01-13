@@ -88,6 +88,7 @@ public class ParseJsonToClass {
 
             component.addExtra(msgComponent);
             if (!myBaseComponent.getText().equals("[MC_QQ] ")) {
+                // 日志中过滤
                 msgLogText.append(myBaseComponent.getText());
             }
         }
