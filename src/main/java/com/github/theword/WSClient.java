@@ -6,7 +6,10 @@ import org.java_websocket.handshake.ServerHandshake;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import static com.github.theword.MC_QQ.*;
+import static com.github.theword.MCQQ.wsClient;
+import static com.github.theword.MCQQ.httpHeaders;
+import static com.github.theword.MCQQ.connectTime;
+import static com.github.theword.MCQQ.serverOpen;
 import static com.github.theword.Utils.parseWebSocketJson;
 import static com.github.theword.Utils.say;
 
@@ -35,7 +38,11 @@ public class WSClient extends WebSocketClient {
     @Override
     public void onMessage(String message) {
         if (ConfigReader.getEnable()) {
-            parseWebSocketJson(message);
+            try {
+                parseWebSocketJson(message);
+            } catch (Exception e) {
+                say("解析消息时出现错误：" + message);
+            }
         }
     }
 
@@ -69,8 +76,10 @@ public class WSClient extends WebSocketClient {
                 wsClient = new WSClient();
                 Thread.sleep(3000);
                 wsClient.connectBlocking();
-            } catch (URISyntaxException | InterruptedException e) {
-                e.printStackTrace();
+            } catch (URISyntaxException e) {
+                say("WebSocket 连接失败，URL 格式错误。");
+            } catch (InterruptedException e) {
+                say("WebSocket 连接失败，线程中断。");
             }
         }
     }
@@ -81,7 +90,7 @@ public class WSClient extends WebSocketClient {
      * @param message 消息
      */
     public void sendMessage(String message) {
-        if (serverOpen && wsClient.isOpen()) {
+        if (wsClient.isOpen() && ConfigReader.getEnable()) {
             wsClient.send(message);
         } else {
             say("发送消息失败，没有连接到 WebSocket 服务器。");
