@@ -6,7 +6,10 @@ import org.java_websocket.handshake.ServerHandshake;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import static com.github.theword.MC_QQ.*;
+import static com.github.theword.MCQQ.httpHeaders;
+import static com.github.theword.MCQQ.wsClient;
+import static com.github.theword.MCQQ.connectTime;
+import static com.github.theword.MCQQ.serverOpen;
 import static com.github.theword.Utils.parseWebSocketJson;
 import static com.github.theword.Utils.say;
 

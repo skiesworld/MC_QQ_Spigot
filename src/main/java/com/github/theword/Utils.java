@@ -1,5 +1,7 @@
 package com.github.theword;
 
+import com.github.theword.event.SpigotEvent;
+import com.github.theword.event.SpigotPlayer;
 import com.github.theword.returnBody.ActionbarReturnBody;
 import com.github.theword.returnBody.BaseReturnBody;
 import com.github.theword.returnBody.MessageReturnBody;
@@ -12,7 +14,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import static com.github.theword.MC_QQ.instance;
+import java.util.Objects;
+
+import static com.github.theword.MCQQ.instance;
 import static com.github.theword.parse.ParseJsonToClass.parseMessageToTextComponent;
 
 public class Utils {
@@ -83,5 +87,47 @@ public class Utils {
             unicodeBytes.append("\\u").append(hexB);
         }
         return unicodeBytes.toString();
+    }
+
+    /**
+     * @param player 玩家
+     * @return SpigotPlayer 对象
+     */
+    public static SpigotPlayer getSpigotPlayer(Player player) {
+        return new SpigotPlayer(
+                player.getUniqueId().toString(),
+                player.getName(),
+                player.getDisplayName(),
+                player.getDisplayName(),
+                Objects.requireNonNull(player.getAddress()).toString(),
+                player.isHealthScaled(),
+                player.getHealthScale(),
+                player.getExp(),
+                player.getTotalExperience(),
+                player.getLevel(),
+                player.getLocale(),
+                // 1.12.2 无Ping属性
+                player.getPlayerTime(),
+                player.isPlayerTimeRelative(),
+                player.getPlayerTimeOffset(),
+                player.getWalkSpeed(),
+                player.getFlySpeed(),
+                player.getAllowFlight(),
+                player.isSprinting(),
+                player.isSneaking(),
+                player.isFlying(),
+                player.isOp()
+        );
+    }
+
+    /**
+     * 获取事件的 json 字符串
+     *
+     * @param event 事件
+     * @return json 字符串
+     */
+    public static String getEventJson(SpigotEvent event) {
+        Gson gson = new Gson();
+        return gson.toJson(event);
     }
 }

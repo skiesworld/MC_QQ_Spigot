@@ -3,12 +3,14 @@ package com.github.theword;
 
 import org.bukkit.configuration.file.FileConfiguration;
 
+import static com.github.theword.MCQQ.instance;
+
 public class ConfigReader {
 
     /**
      * 获取配置文件信息
      */
-    static FileConfiguration config = MC_QQ.instance.getConfig();
+    static FileConfiguration config = instance.getConfig();
 
     /**
      * 获取是否启用插件
