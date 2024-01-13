@@ -1,6 +1,6 @@
 name: MC_QQ
 version: 2.5.3
-main: com.github.theword.MC_QQ
+main: com.github.theword.MCQQ
 api-version: 1.14
 authors: [ 17TheWord ]
 description: 基于NoneBot的与Minecraft Server互通消息的插件
