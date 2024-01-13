@@ -64,7 +64,8 @@ class EventProcessor implements Listener {
         if (ConfigReader.getEnable() && ConfigReader.getCommandMessage()) {
             String command = event.getMessage();
             if (!(command.startsWith("/l ") || command.startsWith("/login ") || command.startsWith("/register ") || command.startsWith("/reg "))) {
-                SpigotPlayerCommandPreprocessEvent spigotPlayerCommandPreprocessEvent = new SpigotPlayerCommandPreprocessEvent(getSpigotPlayer(event.getPlayer()), event.getMessage());
+                command = command.replaceFirst("/", "");
+                SpigotPlayerCommandPreprocessEvent spigotPlayerCommandPreprocessEvent = new SpigotPlayerCommandPreprocessEvent(getSpigotPlayer(event.getPlayer()), command);
                 wsClient.sendMessage(getEventJson(spigotPlayerCommandPreprocessEvent));
             }
         }
