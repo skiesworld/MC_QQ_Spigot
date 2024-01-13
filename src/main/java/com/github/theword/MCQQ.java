@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public final class MC_QQ extends JavaPlugin {
+public final class MCQQ extends JavaPlugin {
     // 静态变量 wsClient
     static WSClient wsClient;
 
