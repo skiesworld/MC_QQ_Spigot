@@ -8,8 +8,11 @@ import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.github.theword.Utils.say;
+import static com.github.theword.Utils.unicodeEncode;
 
-public final class MC_QQ extends JavaPlugin {
+
+public final class MCQQ extends JavaPlugin {
     // 静态变量 wsClient
     static WSClient wsClient;
 
@@ -44,7 +47,7 @@ public final class MC_QQ extends JavaPlugin {
 
         // WebSocket 头部信息
         httpHeaders = new HashMap<>();
-        httpHeaders.put("x-self-name", Utils.unicodeEncode(ConfigReader.getServerName()));
+        httpHeaders.put("x-self-name", unicodeEncode(ConfigReader.getServerName()));
 
         // new Ws 对象，并将配置文件中 地址 与 端口 写入
         try {
@@ -52,7 +55,7 @@ public final class MC_QQ extends JavaPlugin {
             // 启动 WebSocket
             wsClient.connect();
         } catch (URISyntaxException e) {
-            e.printStackTrace();
+            say("WebSocket 连接失败，URL 格式错误。");
         }
         // 注册事件
         Bukkit.getPluginManager().registerEvents(new EventProcessor(), this);
@@ -63,6 +66,7 @@ public final class MC_QQ extends JavaPlugin {
         // Plugin shutdown logic
         serverOpen = false;
         if (wsClient.isOpen()) {
+            say("WebSocket Client 正在关闭...");
             wsClient.close();
         }
     }
