@@ -1,12 +1,14 @@
 package com.github.theword.event;
 
 import com.google.gson.annotations.SerializedName;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class SpigotPlayer {
 
     private String uuid;
@@ -51,27 +53,4 @@ public class SpigotPlayer {
     @SerializedName("is_op")
     private boolean isOp;
 
-    public SpigotPlayer(String uuid, String nickname, String displayName, String playerListName, String address, boolean isHealthScaled, double healthScale, float exp, int totalExp, int level, String locale, long playerTime, boolean isPlayerTimeRelative, long playerTimeOffset, float walkSpeed, float flySpeed, boolean allowFlight, boolean isSprinting, boolean isSneaking, boolean isFlying, boolean isOp) {
-        this.uuid = uuid;
-        this.nickname = nickname;
-        this.displayName = displayName;
-        this.playerListName = playerListName;
-        this.address = address;
-        this.isHealthScaled = isHealthScaled;
-        this.healthScale = healthScale;
-        this.exp = exp;
-        this.totalExp = totalExp;
-        this.level = level;
-        this.locale = locale;
-        this.playerTime = playerTime;
-        this.isPlayerTimeRelative = isPlayerTimeRelative;
-        this.playerTimeOffset = playerTimeOffset;
-        this.walkSpeed = walkSpeed;
-        this.flySpeed = flySpeed;
-        this.allowFlight = allowFlight;
-        this.isSprinting = isSprinting;
-        this.isSneaking = isSneaking;
-        this.isFlying = isFlying;
-        this.isOp = isOp;
-    }
 }
