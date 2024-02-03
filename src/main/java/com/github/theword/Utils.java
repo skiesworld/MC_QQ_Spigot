@@ -10,8 +10,6 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
-import org.bukkit.Bukkit;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.Objects;
@@ -20,15 +18,6 @@ import static com.github.theword.MCQQ.instance;
 import static com.github.theword.parse.ParseJsonToClass.parseMessageToTextComponent;
 
 public class Utils {
-
-    /**
-     * 定义方法 Say()
-     * 向服务器后台发送信息
-     */
-    public static void say(String msg) {
-        CommandSender sender = Bukkit.getConsoleSender();
-        sender.sendMessage("[MC_QQ] " + msg);
-    }
 
     /**
      * 来自 NoneBot 的 JSON 消息的处理

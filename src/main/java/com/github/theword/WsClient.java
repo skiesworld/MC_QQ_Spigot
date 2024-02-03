@@ -10,13 +10,13 @@ import static com.github.theword.MCQQ.wsClient;
 import static com.github.theword.MCQQ.httpHeaders;
 import static com.github.theword.MCQQ.connectTime;
 import static com.github.theword.MCQQ.serverOpen;
+import static com.github.theword.MCQQ.LOGGER;
 import static com.github.theword.Utils.parseWebSocketJson;
-import static com.github.theword.Utils.say;
 
-public class WSClient extends WebSocketClient {
+public class WsClient extends WebSocketClient {
 
 
-    public WSClient() throws URISyntaxException {
+    public WsClient() throws URISyntaxException {
         super(new URI(ConfigReader.getWsUrl()), httpHeaders);
     }
 
@@ -28,7 +28,7 @@ public class WSClient extends WebSocketClient {
     @Override
     public void onOpen(ServerHandshake serverHandshake) {
         connectTime = 0;
-        say("已成功连接 WebSocket 服务器。");
+        LOGGER.info("已成功连接 WebSocket 服务器。");
     }
 
     /**
@@ -41,7 +41,7 @@ public class WSClient extends WebSocketClient {
             try {
                 parseWebSocketJson(message);
             } catch (Exception e) {
-                say("解析消息时出现错误：" + message);
+                LOGGER.warning("解析消息时出现错误：" + message);
             }
         }
     }
@@ -49,13 +49,17 @@ public class WSClient extends WebSocketClient {
     /**
      * 关闭时
      *
-     * @param i 关闭码
-     * @param s 关闭信息
-     * @param b 是否关闭
+     * @param code   关闭码
+     * @param reason 关闭信息
+     * @param remote 是否关闭
      */
     @Override
-    public void onClose(int i, String s, boolean b) {
+    public void onClose(int code, String reason, boolean remote) {
         if (serverOpen && wsClient != null) {
+            connectTime++;
+            if (ConfigReader.getEnableReconnectMsg()) {
+                LOGGER.warning("WebSocket 连接已断开,正在第 " + connectTime + " 次重新连接。");
+            }
             wsClient.sendPing();
         }
     }
@@ -68,18 +72,14 @@ public class WSClient extends WebSocketClient {
     @Override
     public void onError(Exception exception) {
         if (serverOpen && wsClient != null) {
-            connectTime++;
-            if (ConfigReader.getEnableReconnectMsg()) {
-                say("WebSocket 连接已断开,正在第 " + connectTime + " 次重新连接。");
-            }
             try {
-                wsClient = new WSClient();
+                wsClient = new WsClient();
                 Thread.sleep(3000);
                 wsClient.connectBlocking();
             } catch (URISyntaxException e) {
-                say("WebSocket 连接失败，URL 格式错误。");
+                LOGGER.warning("WebSocket 连接失败，URL 格式错误。");
             } catch (InterruptedException e) {
-                say("WebSocket 连接失败，线程中断。");
+                LOGGER.warning("WebSocket 连接失败，线程中断。");
             }
         }
     }
@@ -93,7 +93,7 @@ public class WSClient extends WebSocketClient {
         if (wsClient.isOpen() && ConfigReader.getEnable()) {
             wsClient.send(message);
         } else {
-            say("发送消息失败，没有连接到 WebSocket 服务器。");
+            LOGGER.warning("发送消息失败，没有连接到 WebSocket 服务器。");
         }
     }
 }

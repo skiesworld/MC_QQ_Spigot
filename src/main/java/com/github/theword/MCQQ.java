@@ -4,17 +4,20 @@ package com.github.theword;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
+
 import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
-import static com.github.theword.Utils.say;
 import static com.github.theword.Utils.unicodeEncode;
 
 
 public final class MCQQ extends JavaPlugin {
     // 静态变量 wsClient
-    static WSClient wsClient;
+    static WsClient wsClient;
+
+    public static Logger LOGGER;
 
     // 静态变量 instance
     static JavaPlugin instance;
@@ -32,6 +35,7 @@ public final class MCQQ extends JavaPlugin {
     public void onLoad() {
         // 如果配置文件不存在，Bukkit 会保存默认的配置
         saveDefaultConfig();
+        LOGGER = this.getLogger();
     }
 
     @Override
@@ -51,11 +55,11 @@ public final class MCQQ extends JavaPlugin {
 
         // new Ws 对象，并将配置文件中 地址 与 端口 写入
         try {
-            wsClient = new WSClient();
+            wsClient = new WsClient();
             // 启动 WebSocket
             wsClient.connect();
         } catch (URISyntaxException e) {
-            say("WebSocket 连接失败，URL 格式错误。");
+            LOGGER.warning("WebSocket 连接失败，URL 格式错误。");
         }
         // 注册事件
         Bukkit.getPluginManager().registerEvents(new EventProcessor(), this);
@@ -66,7 +70,7 @@ public final class MCQQ extends JavaPlugin {
         // Plugin shutdown logic
         serverOpen = false;
         if (wsClient.isOpen()) {
-            say("WebSocket Client 正在关闭...");
+            LOGGER.info("WebSocket Client 正在关闭...");
             wsClient.close();
         }
     }
