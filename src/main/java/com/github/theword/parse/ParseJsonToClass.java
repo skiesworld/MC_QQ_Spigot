@@ -10,7 +10,7 @@ import net.md_5.bungee.api.chat.TextComponent;
 
 import java.util.List;
 
-import static com.github.theword.Utils.say;
+import static com.github.theword.MCQQ.LOGGER;
 
 public class ParseJsonToClass {
 
@@ -92,7 +92,7 @@ public class ParseJsonToClass {
                 msgLogText.append(myBaseComponent.getText());
             }
         }
-        say(msgLogText.toString());
+        LOGGER.info(msgLogText.toString());
         return component;
     }
 

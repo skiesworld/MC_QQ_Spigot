@@ -22,15 +22,6 @@ import static com.github.theword.parse.ParseJsonToClass.parseMessageToTextCompon
 public class Utils {
 
     /**
-     * 定义方法 Say()
-     * 向服务器后台发送信息
-     */
-    public static void say(String msg) {
-        CommandSender sender = Bukkit.getConsoleSender();
-        sender.sendMessage("[MC_QQ] " + msg);
-    }
-
-    /**
      * 来自 NoneBot 的 JSON 消息的处理
      */
     static void parseWebSocketJson(String message) {
