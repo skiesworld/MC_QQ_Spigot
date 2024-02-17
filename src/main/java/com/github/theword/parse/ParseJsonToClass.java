@@ -1,6 +1,7 @@
 package com.github.theword.parse;
 
 import com.github.theword.returnBody.returnModle.MyBaseComponent;
+import com.github.theword.returnBody.returnModle.MyHoverItem;
 import com.github.theword.returnBody.returnModle.MyTextComponent;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.BaseComponent;
@@ -63,24 +64,26 @@ public class ParseJsonToClass {
                     ClickEvent clickEvent = new ClickEvent(tempAction, myTextComponent.getClickEvent().getValue());
                     msgComponent.setClickEvent(clickEvent);
                 }
-                // TODO 悬浮事件待完善
+
                 if (myTextComponent.getHoverEvent() != null) {
-                    HoverEvent hoverEvent = null;
+                    HoverEvent hoverEvent;
+                    TextComponent textComponent = parseMessageToTextComponent(myTextComponent.getHoverEvent().getBaseComponentList());
+                    BaseComponent[] baseComponent = new BaseComponent[]{textComponent};
+                    HoverEvent.Action hoverAction = null;
                     switch (myTextComponent.getHoverEvent().getAction()) {
                         case "show_text":
-                            TextComponent textComponent = parseMessageToTextComponent(myTextComponent.getHoverEvent().getBaseComponentList());
-                            BaseComponent[] baseComponent = new BaseComponent[]{textComponent};
-                            hoverEvent = new HoverEvent(HoverEvent.Action.SHOW_TEXT, baseComponent);
+                            hoverAction = HoverEvent.Action.SHOW_TEXT;
                             break;
                         case "show_item":
-//                            hoverEvent = new HoverEvent(HoverEvent.Action.SHOW_ITEM, new Item());
+                            hoverAction = HoverEvent.Action.SHOW_ITEM;
                             break;
                         case "show_entity":
-//                            hoverEvent = new HoverEvent(HoverEvent.Action.SHOW_ENTITY, new Entity());
+                            hoverAction = HoverEvent.Action.SHOW_ENTITY;
                             break;
                         default:
                             break;
                     }
+                    hoverEvent = new HoverEvent(hoverAction, baseComponent);
                     msgComponent.setHoverEvent(hoverEvent);
                 }
             }
