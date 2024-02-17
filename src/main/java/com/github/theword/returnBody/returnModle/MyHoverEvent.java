@@ -13,11 +13,7 @@ public class MyHoverEvent {
     @SerializedName("base_component_list")
     private List<MyBaseComponent> baseComponentList;
 
-    @SerializedName("hover_item")
     private MyHoverItem item;
 
-    @SerializedName("hover_entity")
     private MyHoverEntity entity;
-
-
 }
