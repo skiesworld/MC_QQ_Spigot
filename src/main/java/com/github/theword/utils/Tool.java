@@ -85,15 +85,4 @@ public class Tool {
             );
         }
     }
-
-    public static WsClient connectWebsocket(String url) {
-        try {
-            WsClient wsClient = new WsClient(url);
-            wsClient.connect();
-            return wsClient;
-        } catch (URISyntaxException e) {
-            LOGGER.warning(String.format(WebsocketConstantMessage.WEBSOCKET_ERROR_URI_SYNTAX_ERROR, url));
-        }
-        return null;
-    }
 }
