@@ -14,7 +14,7 @@ import java.util.logging.Logger;
 
 public final class MCQQ extends JavaPlugin {
     public static Logger LOGGER;
-    static JavaPlugin instance;
+    public static JavaPlugin instance;
     public static Config config;
     public static List<WsClient> wsClientList = new ArrayList<>();
 

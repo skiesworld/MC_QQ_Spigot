@@ -1,5 +1,6 @@
 package com.github.theword;
 
+import com.github.theword.utils.HandleWebsocketMessage;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
 
@@ -11,7 +12,7 @@ import java.util.TimerTask;
 
 import static com.github.theword.MCQQ.*;
 import static com.github.theword.MCQQ.config;
-import static com.github.theword.Utils.parseWebSocketJson;
+import static com.github.theword.utils.Tool.unicodeEncode;
 
 public class WsClient extends WebSocketClient {
     private int reconnectTimes = 1;
@@ -23,7 +24,7 @@ public class WsClient extends WebSocketClient {
 
     public WsClient(URI uri) {
         super(uri);
-        addHeader("x-self-name", Utils.unicodeEncode(config.getServerName()));
+        addHeader("x-self-name", unicodeEncode(config.getServerName()));
     }
 
     /**
@@ -46,7 +47,7 @@ public class WsClient extends WebSocketClient {
     public void onMessage(String message) {
         if (config.isEnableMcQQ()) {
             try {
-                parseWebSocketJson(message);
+                new HandleWebsocketMessage().handleWebSocketJson(message);
             } catch (Exception e) {
                 LOGGER.warning(String.format("[MC_QQ] 解析来自 %s 的 WebSocket 消息时出现异常", getURI()));
                 e.printStackTrace();
@@ -109,7 +110,7 @@ public class WsClient extends WebSocketClient {
      *
      * @param message 消息
      */
-    void sendMessage(String message) {
+    public void sendMessage(String message) {
         if (isOpen()) {
             send(message);
         } else {

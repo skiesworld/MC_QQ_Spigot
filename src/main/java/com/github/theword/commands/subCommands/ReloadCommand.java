@@ -10,7 +10,7 @@ import java.util.List;
 
 import static com.github.theword.MCQQ.*;
 import static com.github.theword.MCQQ.wsClientList;
-import static com.github.theword.Utils.connectWebsocket;
+import static com.github.theword.utils.Tool.connectWebsocket;
 
 public class ReloadCommand extends SubCommand {
     @Override

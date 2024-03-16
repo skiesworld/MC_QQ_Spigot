@@ -1,6 +1,6 @@
 package com.github.theword;
 
-import com.github.theword.event.*;
+import com.github.theword.models.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
@@ -11,7 +11,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 
 import static com.github.theword.MCQQ.config;
-import static com.github.theword.Utils.*;
+import static com.github.theword.utils.Tool.*;
 
 class EventProcessor implements Listener {
     /**

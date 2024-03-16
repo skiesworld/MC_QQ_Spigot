@@ -1,65 +1,17 @@
-package com.github.theword;
+package com.github.theword.utils;
 
-import com.github.theword.event.SpigotEvent;
-import com.github.theword.event.SpigotPlayer;
-import com.github.theword.returnBody.ActionbarReturnBody;
-import com.github.theword.returnBody.BaseReturnBody;
-import com.github.theword.returnBody.MessageReturnBody;
-import com.github.theword.returnBody.SendTitleReturnBody;
+import com.github.theword.WsClient;
+import com.github.theword.models.SpigotEvent;
+import com.github.theword.models.SpigotPlayer;
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import net.md_5.bungee.api.ChatMessageType;
-import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.entity.Player;
 
 import java.net.URISyntaxException;
 import java.util.Objects;
 
 import static com.github.theword.MCQQ.*;
-import static com.github.theword.parse.ParseJsonToClass.parseMessageToTextComponent;
 
-public class Utils {
-
-    /**
-     * 来自 NoneBot 的 JSON 消息的处理
-     */
-    static void parseWebSocketJson(String message) {
-        // 组合消息
-        Gson gson = new Gson();
-        BaseReturnBody baseReturnBody = gson.fromJson(message, BaseReturnBody.class);
-        JsonElement data = baseReturnBody.getData();
-        switch (baseReturnBody.getApi()) {
-            case "broadcast":
-                MessageReturnBody messageList = gson.fromJson(data, MessageReturnBody.class);
-                TextComponent textComponent = parseMessageToTextComponent(messageList.getMessageList());
-                instance.getServer().spigot().broadcast(textComponent);
-                break;
-            case "send_title":
-                SendTitleReturnBody sendTitleReturnBody = gson.fromJson(data, SendTitleReturnBody.class);
-                for (Player player : instance.getServer().getOnlinePlayers()) {
-                    player.sendTitle(
-                            sendTitleReturnBody.getSendTitle().getTitle(),
-                            sendTitleReturnBody.getSendTitle().getSubtitle(),
-                            sendTitleReturnBody.getSendTitle().getFadein(),
-                            sendTitleReturnBody.getSendTitle().getStay(),
-                            sendTitleReturnBody.getSendTitle().getFadeout()
-                    );
-                }
-                break;
-            case "actionbar":
-                ActionbarReturnBody actionMessageList = gson.fromJson(data, ActionbarReturnBody.class);
-                TextComponent actionTextComponent = parseMessageToTextComponent(actionMessageList.getMessageList());
-                for (Player player : instance.getServer().getOnlinePlayers()) {
-                    sendActionBar(player, actionTextComponent);
-                }
-                break;
-        }
-    }
-
-    static void sendActionBar(Player player, TextComponent textComponent) {
-        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, textComponent);
-    }
-
+public class Tool {
     /**
      * @param player 玩家
      * @return SpigotPlayer 对象
@@ -97,7 +49,7 @@ public class Utils {
      * @param string 字符串
      * @return unicode编码
      */
-    static String unicodeEncode(String string) {
+    public static String unicodeEncode(String string) {
         char[] utfBytes = string.toCharArray();
         StringBuilder unicodeBytes = new StringBuilder();
         for (char utfByte : utfBytes) {

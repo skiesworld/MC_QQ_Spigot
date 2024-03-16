@@ -1,4 +1,4 @@
-package com.github.theword.parse;
+package com.github.theword.utils;
 
 import com.github.theword.returnBody.returnModle.MyBaseComponent;
 import com.github.theword.returnBody.returnModle.MyHoverEntity;
@@ -16,7 +16,7 @@ import static com.github.theword.MCQQ.LOGGER;
 
 public class ParseJsonToClass {
 
-    public static TextComponent parsePerMessageToTextComponent(MyBaseComponent myBaseComponent) {
+    public TextComponent parsePerMessageToTextComponent(MyBaseComponent myBaseComponent) {
         TextComponent msgComponent = new TextComponent();
 
         // 配置 BaseComponent 基本属性
@@ -58,7 +58,7 @@ public class ParseJsonToClass {
                 ClickEvent clickEvent = new ClickEvent(tempAction, myTextComponent.getClickEvent().getValue());
                 msgComponent.setClickEvent(clickEvent);
             }
-            // TODO 悬浮事件待完善
+
             if (myTextComponent.getHoverEvent() != null) {
                 HoverEvent hoverEvent = null;
                 switch (myTextComponent.getHoverEvent().getAction()) {
@@ -96,7 +96,7 @@ public class ParseJsonToClass {
      * @param myBaseComponentList 消息列表
      * @return TextComponent
      */
-    public static TextComponent parseMessageToTextComponent(List<? extends MyBaseComponent> myBaseComponentList) {
+    public TextComponent parseMessageToTextComponent(List<? extends MyBaseComponent> myBaseComponentList) {
         TextComponent component = new TextComponent();
         StringBuilder msgLogText = new StringBuilder();
 
@@ -116,7 +116,7 @@ public class ParseJsonToClass {
      * @param color 颜色
      * @return ChatColor 对象
      */
-    static ChatColor getColor(String color) {
+    ChatColor getColor(String color) {
         switch (color) {
             case "black":
                 return ChatColor.BLACK;
