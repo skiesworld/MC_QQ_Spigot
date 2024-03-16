@@ -1,16 +1,14 @@
 package com.github.theword.utils;
 
-import com.github.theword.WsClient;
-import com.github.theword.constant.WebsocketConstantMessage;
 import com.github.theword.models.SpigotEvent;
 import com.github.theword.models.SpigotPlayer;
 import com.google.gson.Gson;
 import org.bukkit.entity.Player;
 
-import java.net.URISyntaxException;
 import java.util.Objects;
 
-import static com.github.theword.MCQQ.*;
+import static com.github.theword.MCQQ.config;
+import static com.github.theword.MCQQ.wsClientList;
 
 public class Tool {
     /**
