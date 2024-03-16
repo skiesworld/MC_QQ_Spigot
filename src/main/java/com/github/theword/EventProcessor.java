@@ -21,7 +21,7 @@ class EventProcessor implements Listener {
     void onPlayerChat(AsyncPlayerChatEvent event) {
         if (!event.isCancelled() && config.isEnableChatMessage()) {
             SpigotAsyncPlayerChatEvent spigotAsyncPlayerChatEvent = new SpigotAsyncPlayerChatEvent(getSpigotPlayer(event.getPlayer()), event.getMessage());
-            wsClient.sendMessage(getEventJson(spigotAsyncPlayerChatEvent));
+            sendMessage(getEventJson(spigotAsyncPlayerChatEvent));
         }
     }
 
@@ -32,7 +32,7 @@ class EventProcessor implements Listener {
     void onPlayerDeath(PlayerDeathEvent event) {
         if (config.isEnableDeathMessage()) {
             SpigotPlayerDeathEvent spigotPlayerDeathEvent = new SpigotPlayerDeathEvent(getSpigotPlayer(event.getEntity()), event.getDeathMessage());
-            wsClient.sendMessage(getEventJson(spigotPlayerDeathEvent));
+            sendMessage(getEventJson(spigotPlayerDeathEvent));
         }
     }
 
@@ -43,7 +43,7 @@ class EventProcessor implements Listener {
     void onPlayerJoin(PlayerJoinEvent event) {
         if (config.isEnableJoinMessage()) {
             SpigotPlayerJoinEvent spigotPlayerJoinEvent = new SpigotPlayerJoinEvent(getSpigotPlayer(event.getPlayer()));
-            wsClient.sendMessage(getEventJson(spigotPlayerJoinEvent));
+            sendMessage(getEventJson(spigotPlayerJoinEvent));
         }
     }
 
@@ -54,7 +54,7 @@ class EventProcessor implements Listener {
     void onPlayerQuit(PlayerQuitEvent event) {
         if (config.isEnableQuitMessage()) {
             SpigotPlayerQuitEvent spigotPlayerQuitEvent = new SpigotPlayerQuitEvent(getSpigotPlayer(event.getPlayer()));
-            wsClient.sendMessage(getEventJson(spigotPlayerQuitEvent));
+            sendMessage(getEventJson(spigotPlayerQuitEvent));
         }
     }
 
@@ -62,10 +62,10 @@ class EventProcessor implements Listener {
     void onPlayerCommand(PlayerCommandPreprocessEvent event) {
         if (config.isEnableCommandMessage()) {
             String command = event.getMessage();
-            if (!(command.startsWith("/l ") || command.startsWith("/login ") || command.startsWith("/register ") || command.startsWith("/reg "))) {
+            if (!(command.startsWith("/l ") || command.startsWith("/login ") || command.startsWith("/register ") || command.startsWith("/reg ") || command.startsWith("mcqq "))) {
                 command = command.replaceFirst("/", "");
                 SpigotPlayerCommandPreprocessEvent spigotPlayerCommandPreprocessEvent = new SpigotPlayerCommandPreprocessEvent(getSpigotPlayer(event.getPlayer()), command);
-                wsClient.sendMessage(getEventJson(spigotPlayerCommandPreprocessEvent));
+                sendMessage(getEventJson(spigotPlayerCommandPreprocessEvent));
             }
         }
     }

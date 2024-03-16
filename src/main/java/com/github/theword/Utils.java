@@ -12,9 +12,10 @@ import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.entity.Player;
 
+import java.net.URISyntaxException;
 import java.util.Objects;
 
-import static com.github.theword.MCQQ.instance;
+import static com.github.theword.MCQQ.*;
 import static com.github.theword.parse.ParseJsonToClass.parseMessageToTextComponent;
 
 public class Utils {
@@ -118,5 +119,28 @@ public class Utils {
     public static String getEventJson(SpigotEvent event) {
         Gson gson = new Gson();
         return gson.toJson(event);
+    }
+
+    public static void sendMessage(String message) {
+        if (config.isEnableMcQQ()) {
+            wsClientList.forEach(
+                    wsClient -> {
+                        if (wsClient.isOpen()) {
+                            wsClient.sendMessage(message);
+                        }
+                    }
+            );
+        }
+    }
+
+    public static WsClient connectWebsocket(String url) {
+        try {
+            WsClient wsClient = new WsClient(url);
+            wsClient.connect();
+            return wsClient;
+        } catch (URISyntaxException e) {
+            LOGGER.warning("[MC_QQ] 连接 WebSocket 失败: " + e.getMessage());
+        }
+        return null;
     }
 }

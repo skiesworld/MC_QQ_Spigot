@@ -3,21 +3,27 @@ package com.github.theword;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
 
+import java.net.ConnectException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Timer;
+import java.util.TimerTask;
 
-import static com.github.theword.MCQQ.wsClient;
-import static com.github.theword.MCQQ.httpHeaders;
-import static com.github.theword.MCQQ.connectTime;
-import static com.github.theword.MCQQ.serverOpen;
-import static com.github.theword.MCQQ.LOGGER;
+import static com.github.theword.MCQQ.*;
+import static com.github.theword.MCQQ.config;
 import static com.github.theword.Utils.parseWebSocketJson;
 
 public class WsClient extends WebSocketClient {
+    private int reconnectTimes = 1;
+    private final Timer timer = new Timer();
 
+    public WsClient(String websocketUrl) throws URISyntaxException {
+        this(new URI(websocketUrl));
+    }
 
-    public WsClient() throws URISyntaxException {
-        super(new URI(ConfigReader.getWsUrl()), httpHeaders);
+    public WsClient(URI uri) {
+        super(uri);
+        addHeader("x-self-name", Utils.unicodeEncode(config.getServerName()));
     }
 
     /**
@@ -27,8 +33,9 @@ public class WsClient extends WebSocketClient {
      */
     @Override
     public void onOpen(ServerHandshake serverHandshake) {
-        connectTime = 0;
-        LOGGER.info("已成功连接 WebSocket 服务器。");
+        LOGGER.info(String.format("[MC_QQ] 已成功连接至 %s WebSocket 服务器。", getURI()));
+        reconnectTimes = 1;
+        LOGGER.warning(String.format("[MC_QQ] %s 的重连次数已重置", getURI()));
     }
 
     /**
@@ -37,11 +44,11 @@ public class WsClient extends WebSocketClient {
      */
     @Override
     public void onMessage(String message) {
-        if (ConfigReader.getEnable()) {
+        if (config.isEnableMcQQ()) {
             try {
                 parseWebSocketJson(message);
             } catch (Exception e) {
-                LOGGER.warning("解析消息时出现错误：" + message);
+                LOGGER.warning(String.format("[MC_QQ] 解析来自 %s 的 WebSocket 消息时出现异常", getURI()));
                 e.printStackTrace();
             }
         }
@@ -56,13 +63,28 @@ public class WsClient extends WebSocketClient {
      */
     @Override
     public void onClose(int code, String reason, boolean remote) {
-        if (serverOpen && wsClient != null) {
-            connectTime++;
-            if (ConfigReader.getEnableReconnectMsg()) {
-                LOGGER.warning("WebSocket 连接已断开,正在第 " + connectTime + " 次重新连接。");
-            }
-            wsClient.sendPing();
+        if (remote && reconnectTimes <= config.getReconnectMaxTimes()) {
+            reconnectWebsocket();
         }
+    }
+
+    public void reconnectWebsocket() {
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                reconnect();
+            }
+        };
+        timer.schedule(timerTask, config.getReconnectInterval() * 1000L);
+    }
+
+    @Override
+    public void reconnect() {
+        if (config.isEnableReconnectMessage()) {
+            LOGGER.info(String.format("[MC_QQ] %s 的 WebSocket 连接已断开，尝试第 %d 次重连...", getURI(), reconnectTimes));
+        }
+        reconnectTimes++;
+        super.reconnect();
     }
 
     /**
@@ -72,17 +94,14 @@ public class WsClient extends WebSocketClient {
      */
     @Override
     public void onError(Exception exception) {
-        if (serverOpen && wsClient != null) {
-            try {
-                wsClient = new WsClient();
-                Thread.sleep(3000);
-                wsClient.connectBlocking();
-            } catch (URISyntaxException e) {
-                LOGGER.warning("WebSocket 连接失败，URL 格式错误。");
-            } catch (InterruptedException e) {
-                LOGGER.warning("WebSocket 连接失败，线程中断。");
-            }
+        LOGGER.warning(String.format("[MC_QQ] %s 的 WebSocket 连接出现异常：%s", getURI(), exception.getMessage()));
+        if (exception instanceof ConnectException && exception.getMessage().equals("Connection refused: connect") && reconnectTimes <= config.getReconnectMaxTimes()) {
+            reconnectWebsocket();
         }
+    }
+
+    public Timer getTimer() {
+        return timer;
     }
 
     /**
@@ -90,11 +109,11 @@ public class WsClient extends WebSocketClient {
      *
      * @param message 消息
      */
-    public void sendMessage(String message) {
-        if (wsClient.isOpen() && ConfigReader.getEnable()) {
-            wsClient.send(message);
+    void sendMessage(String message) {
+        if (isOpen()) {
+            send(message);
         } else {
-            LOGGER.warning("发送消息失败，没有连接到 WebSocket 服务器。");
+            LOGGER.info(String.format("[MC_QQ] %s 的 WebSocket 连接未打开，消息发送失败", getURI()));
         }
     }
 }
