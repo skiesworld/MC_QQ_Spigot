@@ -1,5 +1,6 @@
 package com.github.theword.utils;
 
+import com.github.theword.constant.WebsocketConstantMessage;
 import com.github.theword.models.SpigotEvent;
 import com.github.theword.models.SpigotPlayer;
 import com.google.gson.Gson;
@@ -7,8 +8,7 @@ import org.bukkit.entity.Player;
 
 import java.util.Objects;
 
-import static com.github.theword.MCQQ.config;
-import static com.github.theword.MCQQ.wsClientList;
+import static com.github.theword.MCQQ.*;
 
 public class Tool {
     /**
@@ -77,7 +77,9 @@ public class Tool {
             wsClientList.forEach(
                     wsClient -> {
                         if (wsClient.isOpen()) {
-                            wsClient.sendMessage(message);
+                            wsClient.send(message);
+                        } else {
+                            LOGGER.info(String.format(WebsocketConstantMessage.WEBSOCKET_IS_NOT_OPEN_WHEN_SEND_MESSAGE, wsClient.getURI()));
                         }
                     }
             );

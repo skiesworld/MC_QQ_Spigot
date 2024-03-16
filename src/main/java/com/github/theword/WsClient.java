@@ -110,17 +110,4 @@ public class WsClient extends WebSocketClient {
     public Timer getTimer() {
         return timer;
     }
-
-    /**
-     * 发送消息
-     *
-     * @param message 消息
-     */
-    public void sendMessage(String message) {
-        if (isOpen()) {
-            send(message);
-        } else {
-            LOGGER.info(String.format(WebsocketConstantMessage.WEBSOCKET_IS_NOT_OPEN_WHEN_SEND_MESSAGE, getURI()));
-        }
-    }
 }
