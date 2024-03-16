@@ -11,7 +11,7 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.github.theword.MCQQ.*;
+import static com.github.theword.MCQQ.config;
 import static com.github.theword.MCQQ.wsClientList;
 
 public class ReloadCommand extends SubCommand {
@@ -58,6 +58,7 @@ public class ReloadCommand extends SubCommand {
                 commandSender.sendMessage(String.format(WebsocketConstantMessage.WEBSOCKET_ERROR_URI_SYNTAX_ERROR, websocketUrl));
             }
         });
+        commandSender.sendMessage(CommandConstantMessage.RELOADED);
         return true;
     }
 

@@ -76,7 +76,7 @@ public class ReconnectCommand extends SubCommand {
         if (opened.get() == wsClientList.size()) {
             commandSender.sendMessage(CommandConstantMessage.RECONNECT_NO_CLIENT_NEED_RECONNECT);
         }
-
+        commandSender.sendMessage(CommandConstantMessage.RECONNECTED);
         return true;
     }
 }
