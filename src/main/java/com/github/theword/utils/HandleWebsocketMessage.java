@@ -1,5 +1,6 @@
 package com.github.theword.utils;
 
+import com.github.theword.constant.WebsocketConstantMessage;
 import com.github.theword.returnBody.ActionbarReturnBody;
 import com.github.theword.returnBody.BaseReturnBody;
 import com.github.theword.returnBody.MessageReturnBody;
@@ -10,6 +11,7 @@ import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.entity.Player;
 
+import static com.github.theword.MCQQ.LOGGER;
 import static com.github.theword.MCQQ.instance;
 
 public class HandleWebsocketMessage {
@@ -48,6 +50,9 @@ public class HandleWebsocketMessage {
                 for (Player player : instance.getServer().getOnlinePlayers()) {
                     sendActionBar(player, actionTextComponent);
                 }
+                break;
+            default:
+                LOGGER.warning(WebsocketConstantMessage.WEBSOCKET_UNKNOWN_API + baseReturnBody.getApi());
                 break;
         }
     }
