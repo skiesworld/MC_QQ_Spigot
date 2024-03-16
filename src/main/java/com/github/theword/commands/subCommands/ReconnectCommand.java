@@ -1,12 +1,13 @@
 package com.github.theword.commands.subCommands;
 
 import com.github.theword.commands.SubCommand;
+import com.github.theword.constant.CommandConstantMessage;
 import org.bukkit.command.CommandSender;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
-import static com.github.theword.MCQQ.LOGGER;
 import static com.github.theword.MCQQ.wsClientList;
 
 public class ReconnectCommand extends SubCommand {
@@ -17,7 +18,7 @@ public class ReconnectCommand extends SubCommand {
 
     @Override
     public String getDescription() {
-        return "Reconnect Websocket Clients.";
+        return "重新连接 Websocket Clients.";
     }
 
     @Override
@@ -26,21 +27,26 @@ public class ReconnectCommand extends SubCommand {
     }
 
     @Override
+    public String getUsage() {
+        return "使用：/mcqq reconnect [all]";
+    }
+
+    @Override
     public boolean onCommand(CommandSender commandSender, String[] args) {
         if (args.length == 1) {
             if (args[0].equalsIgnoreCase("reconnect")) {
-                return reconnectWebsocketClient(false);
+                return reconnectWebsocketClient(commandSender, false);
             } else {
-                LOGGER.info("Usage: /mcqq reconnect [all]");
+                commandSender.sendMessage(getUsage());
             }
         } else if (args.length == 2) {
             if (args[0].equalsIgnoreCase("all")) {
-                return reconnectWebsocketClient(true);
+                return reconnectWebsocketClient(commandSender, true);
             } else {
-                LOGGER.info("Usage: /mcqq reconnect [all]");
+                commandSender.sendMessage(getUsage());
             }
         } else {
-            LOGGER.info("Usage: /mcqq reconnect [all]");
+            commandSender.sendMessage(getUsage());
         }
         return false;
     }
@@ -52,18 +58,25 @@ public class ReconnectCommand extends SubCommand {
         }};
     }
 
-    private boolean reconnectWebsocketClient(boolean all) {
-        try {
-            wsClientList.forEach(wsClient -> {
-                if (all || !wsClient.isOpen()) {
-                    wsClient.reconnectWebsocket();
-                    LOGGER.info("Reconnect websocket client: " + wsClient.getURI());
-                }
-            });
-        } catch (Exception e) {
-            LOGGER.warning("[MC_QQ] Error on reconnecting websocket : " + e.getMessage());
-            return false;
+    private boolean reconnectWebsocketClient(CommandSender commandSender, boolean all) {
+        if (all) {
+            commandSender.sendMessage(CommandConstantMessage.RECONNECT_ALL_CLIENT);
+        } else {
+            commandSender.sendMessage(CommandConstantMessage.RECONNECT_NOT_OPEN_CLIENT);
         }
+        AtomicInteger opened = new AtomicInteger();
+        wsClientList.forEach(wsClient -> {
+            if (all || !wsClient.isOpen()) {
+                wsClient.reconnectWebsocket();
+                commandSender.sendMessage(String.format(CommandConstantMessage.RECONNECT_MESSAGE, wsClient.getURI()));
+            } else {
+                opened.getAndIncrement();
+            }
+        });
+        if (opened.get() == wsClientList.size()) {
+            commandSender.sendMessage(CommandConstantMessage.RECONNECT_NO_CLIENT_NEED_RECONNECT);
+        }
+
         return true;
     }
 }

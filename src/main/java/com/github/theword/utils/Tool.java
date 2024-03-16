@@ -1,6 +1,7 @@
 package com.github.theword.utils;
 
 import com.github.theword.WsClient;
+import com.github.theword.constant.WebsocketConstantMessage;
 import com.github.theword.models.SpigotEvent;
 import com.github.theword.models.SpigotPlayer;
 import com.google.gson.Gson;
@@ -91,7 +92,7 @@ public class Tool {
             wsClient.connect();
             return wsClient;
         } catch (URISyntaxException e) {
-            LOGGER.warning("[MC_QQ] 连接 WebSocket 失败: " + e.getMessage());
+            LOGGER.warning(String.format(WebsocketConstantMessage.WEBSOCKET_ERROR_URI_SYNTAX_ERROR, url));
         }
         return null;
     }

@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 public class CommandManager implements TabExecutor {
 
-    private ArrayList<SubCommand> subCommands = new ArrayList<>();
+    private final ArrayList<SubCommand> subCommands = new ArrayList<>();
 
     public CommandManager() {
         subCommands.add(new ReloadCommand());
@@ -21,8 +21,15 @@ public class CommandManager implements TabExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
-        if (args.length > 0) {
-            for (SubCommand subCommand : subCommands) {
+        if (args.length == 0) {
+            commandSender.sendMessage("-------------------");
+            for (SubCommand subCommand : getSubCommands()) {
+                commandSender.sendMessage(subCommand.getUsage() + "---" + subCommand.getDescription());
+            }
+            commandSender.sendMessage("-------------------");
+            return true;
+        } else {
+            for (SubCommand subCommand : getSubCommands()) {
                 if (subCommand.getName().equalsIgnoreCase(args[0])) {
                     return subCommand.onCommand(commandSender, args);
                 }

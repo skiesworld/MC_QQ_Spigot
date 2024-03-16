@@ -2,6 +2,7 @@ package com.github.theword;
 
 
 import com.github.theword.commands.CommandManager;
+import com.github.theword.constant.WebsocketConstantMessage;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -27,7 +28,7 @@ public final class MCQQ extends JavaPlugin {
     @Override
     public void onEnable() {
         instance = this;
-        LOGGER.info("[MC_QQ] WebSocket Client 正在启动...");
+        LOGGER.info(WebsocketConstantMessage.WEBSOCKET_RUNNING);
 
         config.getWebsocketUrlList().forEach(url -> {
             try {
@@ -35,7 +36,7 @@ public final class MCQQ extends JavaPlugin {
                 wsClient.connect();
                 wsClientList.add(wsClient);
             } catch (URISyntaxException e) {
-                LOGGER.warning(String.format("[MC_QQ]|连接至：%s WebSocket URL 配置错误，无法连接！", url));
+                LOGGER.warning(String.format(WebsocketConstantMessage.WEBSOCKET_ERROR_URI_SYNTAX_ERROR, url));
             }
         });
         Bukkit.getPluginManager().registerEvents(new EventProcessor(), this);
@@ -49,7 +50,7 @@ public final class MCQQ extends JavaPlugin {
                     wsClient.getTimer().cancel();
                     wsClient.close(
                             1000,
-                            String.format("[MC_QQ]|连接至：%s 的 WebSocket Client 正在关闭", wsClient.getURI())
+                            String.format(WebsocketConstantMessage.WEBSOCKET_CLOSING, wsClient.getURI())
                     );
                 }
         );
