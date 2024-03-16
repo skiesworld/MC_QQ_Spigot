@@ -14,7 +14,8 @@ import static com.github.theword.MCQQ.instance;
 
 public class HandleWebsocketMessage {
 
-    private final ParseJsonToClass parseJsonToClass = new ParseJsonToClass();
+    private final ParseJsonToEvent parseJsonToEvent = new ParseJsonToEvent();
+
     /**
      * 来自 NoneBot 的 JSON 消息的处理
      */
@@ -26,7 +27,7 @@ public class HandleWebsocketMessage {
         switch (baseReturnBody.getApi()) {
             case "broadcast":
                 MessageReturnBody messageList = gson.fromJson(data, MessageReturnBody.class);
-                TextComponent textComponent = parseJsonToClass.parseMessageToTextComponent(messageList.getMessageList());
+                TextComponent textComponent = parseJsonToEvent.parseMessageToTextComponent(messageList.getMessageList());
                 instance.getServer().spigot().broadcast(textComponent);
                 break;
             case "send_title":
@@ -43,7 +44,7 @@ public class HandleWebsocketMessage {
                 break;
             case "actionbar":
                 ActionbarReturnBody actionMessageList = gson.fromJson(data, ActionbarReturnBody.class);
-                TextComponent actionTextComponent = parseJsonToClass.parseMessageToTextComponent(actionMessageList.getMessageList());
+                TextComponent actionTextComponent = parseJsonToEvent.parseMessageToTextComponent(actionMessageList.getMessageList());
                 for (Player player : instance.getServer().getOnlinePlayers()) {
                     sendActionBar(player, actionTextComponent);
                 }

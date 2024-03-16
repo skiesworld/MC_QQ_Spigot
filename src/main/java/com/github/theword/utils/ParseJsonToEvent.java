@@ -14,7 +14,7 @@ import java.util.List;
 
 import static com.github.theword.MCQQ.LOGGER;
 
-public class ParseJsonToClass {
+public class ParseJsonToEvent {
 
     public TextComponent parsePerMessageToTextComponent(MyBaseComponent myBaseComponent) {
         TextComponent msgComponent = new TextComponent();
