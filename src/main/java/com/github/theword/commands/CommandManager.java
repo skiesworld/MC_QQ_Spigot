@@ -2,7 +2,9 @@ package com.github.theword.commands;
 
 import com.github.theword.commands.subCommands.ReconnectCommand;
 import com.github.theword.commands.subCommands.ReloadCommand;
-import org.bukkit.command.*;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabExecutor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
