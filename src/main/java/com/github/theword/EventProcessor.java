@@ -10,9 +10,8 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 
-import static com.github.theword.MCQQ.wsClient;
-import static com.github.theword.Utils.getSpigotPlayer;
-import static com.github.theword.Utils.getEventJson;
+import static com.github.theword.MCQQ.config;
+import static com.github.theword.Utils.*;
 
 class EventProcessor implements Listener {
     /**
@@ -20,7 +19,7 @@ class EventProcessor implements Listener {
      */
     @EventHandler
     void onPlayerChat(AsyncPlayerChatEvent event) {
-        if (!event.isCancelled()) {
+        if (!event.isCancelled() && config.isEnableChatMessage()) {
             SpigotAsyncPlayerChatEvent spigotAsyncPlayerChatEvent = new SpigotAsyncPlayerChatEvent(getSpigotPlayer(event.getPlayer()), event.getMessage());
             wsClient.sendMessage(getEventJson(spigotAsyncPlayerChatEvent));
         }
@@ -31,7 +30,7 @@ class EventProcessor implements Listener {
      */
     @EventHandler
     void onPlayerDeath(PlayerDeathEvent event) {
-        if (ConfigReader.getDeathMessage()) {
+        if (config.isEnableDeathMessage()) {
             SpigotPlayerDeathEvent spigotPlayerDeathEvent = new SpigotPlayerDeathEvent(getSpigotPlayer(event.getEntity()), event.getDeathMessage());
             wsClient.sendMessage(getEventJson(spigotPlayerDeathEvent));
         }
@@ -42,7 +41,7 @@ class EventProcessor implements Listener {
      */
     @EventHandler
     void onPlayerJoin(PlayerJoinEvent event) {
-        if (ConfigReader.getJoinQuit()) {
+        if (config.isEnableJoinMessage()) {
             SpigotPlayerJoinEvent spigotPlayerJoinEvent = new SpigotPlayerJoinEvent(getSpigotPlayer(event.getPlayer()));
             wsClient.sendMessage(getEventJson(spigotPlayerJoinEvent));
         }
@@ -53,7 +52,7 @@ class EventProcessor implements Listener {
      */
     @EventHandler
     void onPlayerQuit(PlayerQuitEvent event) {
-        if (ConfigReader.getJoinQuit()) {
+        if (config.isEnableQuitMessage()) {
             SpigotPlayerQuitEvent spigotPlayerQuitEvent = new SpigotPlayerQuitEvent(getSpigotPlayer(event.getPlayer()));
             wsClient.sendMessage(getEventJson(spigotPlayerQuitEvent));
         }
@@ -61,7 +60,7 @@ class EventProcessor implements Listener {
 
     @EventHandler
     void onPlayerCommand(PlayerCommandPreprocessEvent event) {
-        if (ConfigReader.getEnable() && ConfigReader.getCommandMessage()) {
+        if (config.isEnableCommandMessage()) {
             String command = event.getMessage();
             if (!(command.startsWith("/l ") || command.startsWith("/login ") || command.startsWith("/register ") || command.startsWith("/reg "))) {
                 command = command.replaceFirst("/", "");
