@@ -75,9 +75,7 @@ public class ParseJsonToEvent {
                         break;
                     case "show_entity":
                         MyHoverEntity myHoverEntity = myTextComponent.getHoverEvent().getEntity();
-
                         TextComponent nameComponent = parseMessageToTextComponent(myHoverEntity.getName());
-
                         Entity entity = new Entity(myHoverEntity.getType(), myHoverEntity.getId(), nameComponent);
                         hoverEvent = new HoverEvent(HoverEvent.Action.SHOW_ENTITY, entity);
                         break;
