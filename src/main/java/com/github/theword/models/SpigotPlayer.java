@@ -32,7 +32,7 @@ public class SpigotPlayer {
 
     private String locale;
 
-    private int ping;
+    private Integer ping;
     @SerializedName("player_time")
     private long playerTime;
     @SerializedName("is_player_time_relative")

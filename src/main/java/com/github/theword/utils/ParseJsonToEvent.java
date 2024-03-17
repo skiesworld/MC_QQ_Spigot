@@ -1,14 +1,12 @@
 package com.github.theword.utils;
 
 import com.github.theword.returnBody.returnModle.MyBaseComponent;
-import com.github.theword.returnBody.returnModle.MyHoverEntity;
-import com.github.theword.returnBody.returnModle.MyHoverItem;
 import com.github.theword.returnBody.returnModle.MyTextComponent;
 import net.md_5.bungee.api.ChatColor;
-import net.md_5.bungee.api.chat.*;
-import net.md_5.bungee.api.chat.hover.content.Entity;
-import net.md_5.bungee.api.chat.hover.content.Item;
-import net.md_5.bungee.api.chat.hover.content.Text;
+import net.md_5.bungee.api.chat.BaseComponent;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.TextComponent;
 
 import java.util.List;
 
@@ -49,9 +47,6 @@ public class ParseJsonToEvent {
                     case "change_page":
                         tempAction = ClickEvent.Action.CHANGE_PAGE;
                         break;
-                    case "copy_to_clipboard":
-                        tempAction = ClickEvent.Action.COPY_TO_CLIPBOARD;
-                        break;
                     default:
                         break;
                 }
@@ -60,30 +55,24 @@ public class ParseJsonToEvent {
             }
 
             if (myTextComponent.getHoverEvent() != null) {
-                HoverEvent hoverEvent = null;
+                HoverEvent hoverEvent;
+                TextComponent textComponent = parseMessageToTextComponent(myTextComponent.getHoverEvent().getBaseComponentList());
+                BaseComponent[] baseComponent = new BaseComponent[]{textComponent};
+                HoverEvent.Action hoverAction = null;
                 switch (myTextComponent.getHoverEvent().getAction()) {
                     case "show_text":
-                        TextComponent textComponent = parseMessageToTextComponent(myTextComponent.getHoverEvent().getBaseComponentList());
-                        BaseComponent[] baseComponent = new BaseComponent[]{textComponent};
-                        hoverEvent = new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(baseComponent));
+                        hoverAction = HoverEvent.Action.SHOW_TEXT;
                         break;
                     case "show_item":
-                        MyHoverItem myHoverItem = myTextComponent.getHoverEvent().getItem();
-                        ItemTag itemTag = ItemTag.ofNbt(myHoverItem.getTag());
-                        Item item = new Item(myHoverItem.getId(), myHoverItem.getCount(), itemTag);
-                        hoverEvent = new HoverEvent(HoverEvent.Action.SHOW_ITEM, item);
+                        hoverAction = HoverEvent.Action.SHOW_ITEM;
                         break;
                     case "show_entity":
-                        MyHoverEntity myHoverEntity = myTextComponent.getHoverEvent().getEntity();
-
-                        TextComponent nameComponent = parseMessageToTextComponent(myHoverEntity.getName());
-
-                        Entity entity = new Entity(myHoverEntity.getType(), myHoverEntity.getId(), nameComponent);
-                        hoverEvent = new HoverEvent(HoverEvent.Action.SHOW_ENTITY, entity);
+                        hoverAction = HoverEvent.Action.SHOW_ENTITY;
                         break;
                     default:
                         break;
                 }
+                hoverEvent = new HoverEvent(hoverAction, baseComponent);
                 msgComponent.setHoverEvent(hoverEvent);
             }
         }

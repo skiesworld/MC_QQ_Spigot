@@ -28,7 +28,7 @@ public class Tool {
                 player.getTotalExperience(),
                 player.getLevel(),
                 player.getLocale(),
-                player.getPing(),
+                null,
                 player.getPlayerTime(),
                 player.isPlayerTimeRelative(),
                 player.getPlayerTimeOffset(),
