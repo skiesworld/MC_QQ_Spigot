@@ -8,12 +8,9 @@ import java.util.List;
 
 @Data
 public class MyHoverEvent {
-
     private String action;
     @SerializedName("base_component_list")
     private List<MyBaseComponent> baseComponentList;
-
     private MyHoverItem item;
-
     private MyHoverEntity entity;
 }
