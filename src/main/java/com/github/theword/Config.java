@@ -47,7 +47,7 @@ public class Config {
                 assert inputStream != null;
                 FileUtils.copyInputStreamToFile(inputStream, configMapFilePath.toFile());
             } catch (IOException e) {
-                LOGGER.warning(ConfigConstantMessage.CONFIG_COPY_FIELD);
+                LOGGER.warn(ConfigConstantMessage.CONFIG_COPY_FIELD);
             }
         }
         try {
@@ -69,20 +69,20 @@ public class Config {
                         if (websocketUrl instanceof String) {
                             websocketUrlList.add((String) websocketUrl);
                         } else {
-                            LOGGER.warning(ConfigConstantMessage.CONFIG_NO_STRING_IN_WEBSOCKET_URL_LIST + websocketUrl);
+                            LOGGER.warn(ConfigConstantMessage.CONFIG_NO_STRING_IN_WEBSOCKET_URL_LIST + websocketUrl);
                         }
                     }
                 } else {
                     websocketUrlList = new ArrayList<>() {{
                         add("ws://127.0.0.1:8080/minecraft/ws");
                     }};
-                    LOGGER.warning(ConfigConstantMessage.CONFIG_WEBSOCKET_URL_LIST_ERROR_USE_DEFAULT);
+                    LOGGER.warn(ConfigConstantMessage.CONFIG_WEBSOCKET_URL_LIST_ERROR_USE_DEFAULT);
                 }
             } catch (ClassCastException e) {
                 websocketUrlList = new ArrayList<>() {{
                     add("ws://127.0.0.1:8080/minecraft/ws");
                 }};
-                LOGGER.warning(ConfigConstantMessage.CONFIG_WEBSOCKET_URL_LIST_ERROR_USE_DEFAULT);
+                LOGGER.warn(ConfigConstantMessage.CONFIG_WEBSOCKET_URL_LIST_ERROR_USE_DEFAULT);
             }
             sayWay = (String) configMap.get("say_way");
             enableCommandMessage = (boolean) configMap.get("enable_command_message");
@@ -91,7 +91,7 @@ public class Config {
             enableQuitMessage = (boolean) configMap.get("enable_quit_message");
             serverName = (String) configMap.get("server_name");
         } catch (Exception e) {
-            LOGGER.warning(ConfigConstantMessage.CONFIG_READING_ERROR);
+            LOGGER.warn(ConfigConstantMessage.CONFIG_READING_ERROR);
             enableMcQQ = true;
             enableChatMessage = true;
             enableReconnectMessage = false;

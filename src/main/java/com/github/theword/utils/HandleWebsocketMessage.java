@@ -52,7 +52,7 @@ public class HandleWebsocketMessage {
                 }
                 break;
             default:
-                LOGGER.warning(WebsocketConstantMessage.WEBSOCKET_UNKNOWN_API + baseReturnBody.getApi());
+                LOGGER.warn(WebsocketConstantMessage.WEBSOCKET_UNKNOWN_API + baseReturnBody.getApi());
                 break;
         }
     }

@@ -49,7 +49,7 @@ public class WsClient extends WebSocketClient {
             try {
                 new HandleWebsocketMessage().handleWebSocketJson(message);
             } catch (Exception e) {
-                LOGGER.warning(String.format(WebsocketConstantMessage.WEBSOCKET_ERROR_ON_MESSAGE, getURI()));
+                LOGGER.warn(String.format(WebsocketConstantMessage.WEBSOCKET_ERROR_ON_MESSAGE, getURI()));
                 e.printStackTrace();
             }
         }
@@ -98,7 +98,7 @@ public class WsClient extends WebSocketClient {
      */
     @Override
     public void onError(Exception exception) {
-        LOGGER.warning(String.format(WebsocketConstantMessage.WEBSOCKET_ON_ERROR, getURI(), exception.getMessage()));
+        LOGGER.warn(String.format(WebsocketConstantMessage.WEBSOCKET_ON_ERROR, getURI(), exception.getMessage()));
         if (exception instanceof ConnectException && exception.getMessage().equals("Connection refused: connect") && reconnectTimes <= config.getReconnectMaxTimes()) {
             if (reconnectTimes == config.getReconnectMaxTimes()) {
                 LOGGER.info(String.format(WebsocketConstantMessage.WEBSOCKET_RECONNECT_TIMES_REACH, getURI()));
