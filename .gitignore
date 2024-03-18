@@ -14,7 +14,6 @@
 target/
 .idea/
 
-MC_QQ_Spigot.iml
 
 # Package Files #
 *.jar

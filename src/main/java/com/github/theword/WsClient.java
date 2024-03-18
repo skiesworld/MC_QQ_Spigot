@@ -1,19 +1,31 @@
 package com.github.theword;
 
+import com.github.theword.constant.WebsocketConstantMessage;
+import com.github.theword.utils.HandleWebsocketMessage;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
 
+import java.net.ConnectException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import static com.github.theword.MCQQ.*;
-import static com.github.theword.Utils.parseWebSocketJson;
+import static com.github.theword.MCQQ.config;
+import static com.github.theword.utils.Tool.unicodeEncode;
 
 public class WsClient extends WebSocketClient {
+    private int reconnectTimes = 1;
+    private final Timer timer = new Timer();
 
+    public WsClient(String websocketUrl) throws URISyntaxException {
+        this(new URI(websocketUrl));
+    }
 
-    public WsClient() throws URISyntaxException {
-        super(new URI(ConfigReader.getWsUrl()), httpHeaders);
+    public WsClient(URI uri) {
+        super(uri);
+        addHeader("x-self-name", unicodeEncode(config.getServerName()));
     }
 
     /**
@@ -23,8 +35,8 @@ public class WsClient extends WebSocketClient {
      */
     @Override
     public void onOpen(ServerHandshake serverHandshake) {
-        connectTime = 0;
-        LOGGER.info("已成功连接 WebSocket 服务器。");
+        LOGGER.info(String.format(WebsocketConstantMessage.WEBSOCKET_ON_OPEN, getURI()));
+        reconnectTimes = 1;
     }
 
     /**
@@ -33,11 +45,11 @@ public class WsClient extends WebSocketClient {
      */
     @Override
     public void onMessage(String message) {
-        if (ConfigReader.getEnable()) {
+        if (config.isEnableMcQQ()) {
             try {
-                parseWebSocketJson(message);
+                new HandleWebsocketMessage().handleWebSocketJson(message);
             } catch (Exception e) {
-                LOGGER.warning("解析消息时出现错误：" + message);
+                LOGGER.warn(String.format(WebsocketConstantMessage.WEBSOCKET_ERROR_ON_MESSAGE, getURI()));
                 e.printStackTrace();
             }
         }
@@ -52,9 +64,31 @@ public class WsClient extends WebSocketClient {
      */
     @Override
     public void onClose(int code, String reason, boolean remote) {
-        if (serverOpen && wsClient != null) {
-            wsClient.sendPing();
+        if (remote && reconnectTimes <= config.getReconnectMaxTimes()) {
+            if (reconnectTimes == config.getReconnectMaxTimes()) {
+                LOGGER.info(String.format(WebsocketConstantMessage.WEBSOCKET_RECONNECT_TIMES_REACH, getURI()));
+            }
+            reconnectWebsocket();
         }
+    }
+
+    public void reconnectWebsocket() {
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                reconnect();
+            }
+        };
+        timer.schedule(timerTask, config.getReconnectInterval() * 1000L);
+    }
+
+    @Override
+    public void reconnect() {
+        if (config.isEnableReconnectMessage()) {
+            LOGGER.info(String.format(WebsocketConstantMessage.WEBSOCKET_RECONNECT_MESSAGE, getURI(), reconnectTimes));
+        }
+        reconnectTimes++;
+        super.reconnect();
     }
 
     /**
@@ -64,33 +98,16 @@ public class WsClient extends WebSocketClient {
      */
     @Override
     public void onError(Exception exception) {
-        if (serverOpen && wsClient != null) {
-            connectTime++;
-            if (ConfigReader.getEnableReconnectMsg()) {
-                LOGGER.warning("WebSocket 连接已断开,正在第 " + connectTime + " 次重新连接。");
+        LOGGER.warn(String.format(WebsocketConstantMessage.WEBSOCKET_ON_ERROR, getURI(), exception.getMessage()));
+        if (exception instanceof ConnectException && exception.getMessage().equals("Connection refused: connect") && reconnectTimes <= config.getReconnectMaxTimes()) {
+            if (reconnectTimes == config.getReconnectMaxTimes()) {
+                LOGGER.info(String.format(WebsocketConstantMessage.WEBSOCKET_RECONNECT_TIMES_REACH, getURI()));
             }
-            try {
-                wsClient = new WsClient();
-                Thread.sleep(3000);
-                wsClient.connectBlocking();
-            } catch (URISyntaxException e) {
-                LOGGER.warning("WebSocket 连接失败，URL 格式错误。");
-            } catch (InterruptedException e) {
-                LOGGER.warning("WebSocket 连接失败，线程中断。");
-            }
+            reconnectWebsocket();
         }
     }
 
-    /**
-     * 发送消息
-     *
-     * @param message 消息
-     */
-    public void sendMessage(String message) {
-        if (serverOpen && wsClient.isOpen()) {
-            wsClient.send(message);
-        } else {
-            LOGGER.warning("发送消息失败，没有连接到 WebSocket 服务器。");
-        }
+    public Timer getTimer() {
+        return timer;
     }
 }

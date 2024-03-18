@@ -1,7 +1,12 @@
 name: MC_QQ
-version: 2.5.3
+version: ${project.version}
 main: com.github.theword.MCQQ
-api-version: 1.12.2
+api-version: ${project.minecraftVersion}
 authors: [ 17TheWord ]
 description: 基于NoneBot的与Minecraft Server互通消息的插件
-website: https://github.com/17TheWord/nonebot-plugin-mcqq
+website: https://github.com/17TheWord/MC_QQ_Spigot
+commands:
+  mcqq:
+    description: MCQQ命令
+    permission: mcqq
+    permission-message: 您没有执行命令的权限

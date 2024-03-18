@@ -1,4 +1,4 @@
-package com.github.theword.event;
+package com.github.theword.models;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.AllArgsConstructor;
@@ -32,6 +32,7 @@ public class SpigotPlayer {
 
     private String locale;
 
+    private Integer ping;
     @SerializedName("player_time")
     private long playerTime;
     @SerializedName("is_player_time_relative")

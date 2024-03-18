@@ -4,5 +4,7 @@ import lombok.Data;
 
 @Data
 public class MyHoverItem {
-
+    String id;
+    int count;
+    String tag;
 }

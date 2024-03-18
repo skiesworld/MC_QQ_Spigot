@@ -1,13 +1,14 @@
-package com.github.theword.event;
+package com.github.theword.models;
 
-import com.github.theword.ConfigReader;
 import com.google.gson.annotations.SerializedName;
+
+import static com.github.theword.MCQQ.config;
 
 
 public class SpigotEvent {
 
     @SerializedName("server_name")
-    private final String serverName = ConfigReader.getServerName();
+    private final String serverName = config.getServerName();
 
     @SerializedName("event_name")
     private String eventName;
