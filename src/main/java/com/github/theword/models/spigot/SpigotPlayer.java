@@ -1,18 +1,20 @@
-package com.github.theword.models;
+package com.github.theword.models.spigot;
 
+import com.github.theword.eventModels.base.BasePlayer;
 import com.google.gson.annotations.SerializedName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class SpigotPlayer {
+@EqualsAndHashCode(callSuper = true)
+public class SpigotPlayer extends BasePlayer {
 
     private String uuid;
-    private String nickname;
     @SerializedName("display_name")
     private String displayName;
     @SerializedName("player_list_name")
