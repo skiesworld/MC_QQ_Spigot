@@ -1,6 +1,6 @@
 package com.github.theword;
 
-import com.github.theword.models.spigot.*;
+import com.github.theword.eventModels.spigot.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
