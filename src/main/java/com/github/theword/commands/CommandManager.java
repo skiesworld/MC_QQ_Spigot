@@ -2,6 +2,7 @@ package com.github.theword.commands;
 
 import com.github.theword.commands.subCommands.ReconnectCommand;
 import com.github.theword.commands.subCommands.ReloadCommand;
+import lombok.Getter;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Getter
 public class CommandManager implements TabExecutor {
 
     private final ArrayList<SubCommand> subCommands = new ArrayList<>();
@@ -39,10 +41,6 @@ public class CommandManager implements TabExecutor {
             }
         }
         return false;
-    }
-
-    public ArrayList<SubCommand> getSubCommands() {
-        return subCommands;
     }
 
     @Nullable
