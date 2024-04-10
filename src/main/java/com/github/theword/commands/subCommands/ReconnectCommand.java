@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static com.github.theword.MCQQ.wsClientList;
+import static com.github.theword.utils.Tool.wsClientList;
 
 public class ReconnectCommand extends SubCommand {
     @Override
@@ -53,7 +53,7 @@ public class ReconnectCommand extends SubCommand {
 
     @Override
     public List<String> getSubCommands(CommandSender commandSender, String[] args) {
-        return new ArrayList<>() {{
+        return new ArrayList<String>() {{
             add("all");
         }};
     }

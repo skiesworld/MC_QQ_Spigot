@@ -12,7 +12,7 @@ import net.md_5.bungee.api.chat.hover.content.Text;
 
 import java.util.List;
 
-import static com.github.theword.MCQQ.LOGGER;
+import static com.github.theword.utils.Tool.logger;
 
 public class ParseJsonToEvent {
 
@@ -70,14 +70,12 @@ public class ParseJsonToEvent {
                     case "show_item":
                         MyHoverItem myHoverItem = myTextComponent.getHoverEvent().getItem();
                         ItemTag itemTag = ItemTag.ofNbt(myHoverItem.getTag());
-                        Item item = new Item(myHoverItem.getId(), myHoverItem.getCount(), itemTag);
+                        Item item = new Item(String.valueOf(myHoverItem.getId()), myHoverItem.getCount(), itemTag);
                         hoverEvent = new HoverEvent(HoverEvent.Action.SHOW_ITEM, item);
                         break;
                     case "show_entity":
                         MyHoverEntity myHoverEntity = myTextComponent.getHoverEvent().getEntity();
-
                         TextComponent nameComponent = parseMessageToTextComponent(myHoverEntity.getName());
-
                         Entity entity = new Entity(myHoverEntity.getType(), myHoverEntity.getId(), nameComponent);
                         hoverEvent = new HoverEvent(HoverEvent.Action.SHOW_ENTITY, entity);
                         break;
@@ -108,7 +106,7 @@ public class ParseJsonToEvent {
                 msgLogText.append(myBaseComponent.getText());
             }
         }
-        LOGGER.info(msgLogText.toString());
+        logger.info(msgLogText.toString());
         return component;
     }
 

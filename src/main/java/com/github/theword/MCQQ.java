@@ -2,41 +2,45 @@ package com.github.theword;
 
 
 import com.github.theword.commands.CommandManager;
+import com.github.theword.constant.BaseConstant;
 import com.github.theword.constant.WebsocketConstantMessage;
+import com.github.theword.utils.Config;
+import com.github.theword.utils.HandleWebsocketMessageService;
+import com.github.theword.websocket.WsClient;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.slf4j.LoggerFactory;
 
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
-import java.util.logging.Logger;
 
+import static com.github.theword.utils.Tool.*;
 
 public final class MCQQ extends JavaPlugin {
-    public static Logger LOGGER;
     public static JavaPlugin instance;
-    public static Config config;
-    public static List<WsClient> wsClientList = new ArrayList<>();
 
     @Override
     public void onLoad() {
-        LOGGER = this.getLogger();
+        logger = LoggerFactory.getLogger("");
+        handleWebsocketMessage = new HandleWebsocketMessageService();
         config = new Config(false);
+        wsClientList = new ArrayList<>();
+        logger.info(BaseConstant.INITIALIZED);
     }
 
     @Override
     public void onEnable() {
         instance = this;
-        LOGGER.info(WebsocketConstantMessage.WEBSOCKET_RUNNING);
-
-        config.getWebsocketUrlList().forEach(url -> {
+        logger.info(WebsocketConstantMessage.WEBSOCKET_RUNNING);
+        config.getWebsocketUrlList().forEach(websocketUrl -> {
             try {
-                WsClient wsClient = new WsClient(url);
+                WsClient wsClient = new WsClient(new URI(websocketUrl));
                 wsClient.connect();
                 wsClientList.add(wsClient);
             } catch (URISyntaxException e) {
-                LOGGER.warning(String.format(WebsocketConstantMessage.WEBSOCKET_ERROR_URI_SYNTAX_ERROR, url));
+                logger.warn(String.format(WebsocketConstantMessage.WEBSOCKET_ERROR_URI_SYNTAX_ERROR, websocketUrl));
             }
         });
         Bukkit.getPluginManager().registerEvents(new EventProcessor(), this);
@@ -46,13 +50,10 @@ public final class MCQQ extends JavaPlugin {
     @Override
     public void onDisable() {
         wsClientList.forEach(
-                wsClient -> {
-                    wsClient.getTimer().cancel();
-                    wsClient.close(
-                            1000,
-                            String.format(WebsocketConstantMessage.WEBSOCKET_CLOSING, wsClient.getURI())
-                    );
-                }
+                wsClient -> wsClient.stopWithoutReconnect(
+                        1000,
+                        String.format(WebsocketConstantMessage.WEBSOCKET_CLOSING, wsClient.getURI())
+                )
         );
     }
 

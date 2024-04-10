@@ -1,6 +1,7 @@
 package com.github.theword;
 
-import com.github.theword.models.*;
+import com.github.theword.eventModels.spigot.*;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
@@ -9,9 +10,11 @@ import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
+import java.util.Objects;
 
-import static com.github.theword.MCQQ.config;
-import static com.github.theword.utils.Tool.*;
+import static com.github.theword.utils.Tool.config;
+import static com.github.theword.utils.Tool.sendMessage;
+
 
 class EventProcessor implements Listener {
     /**
@@ -21,7 +24,8 @@ class EventProcessor implements Listener {
     void onPlayerChat(AsyncPlayerChatEvent event) {
         if (!event.isCancelled() && config.isEnableChatMessage()) {
             SpigotAsyncPlayerChatEvent spigotAsyncPlayerChatEvent = new SpigotAsyncPlayerChatEvent(getSpigotPlayer(event.getPlayer()), event.getMessage());
-            sendMessage(getEventJson(spigotAsyncPlayerChatEvent));
+            spigotAsyncPlayerChatEvent.setServerName(config.getServerName());
+            sendMessage(spigotAsyncPlayerChatEvent);
         }
     }
 
@@ -32,7 +36,8 @@ class EventProcessor implements Listener {
     void onPlayerDeath(PlayerDeathEvent event) {
         if (config.isEnableDeathMessage()) {
             SpigotPlayerDeathEvent spigotPlayerDeathEvent = new SpigotPlayerDeathEvent(getSpigotPlayer(event.getEntity()), event.getDeathMessage());
-            sendMessage(getEventJson(spigotPlayerDeathEvent));
+            spigotPlayerDeathEvent.setServerName(config.getServerName());
+            sendMessage(spigotPlayerDeathEvent);
         }
     }
 
@@ -43,7 +48,8 @@ class EventProcessor implements Listener {
     void onPlayerJoin(PlayerJoinEvent event) {
         if (config.isEnableJoinMessage()) {
             SpigotPlayerJoinEvent spigotPlayerJoinEvent = new SpigotPlayerJoinEvent(getSpigotPlayer(event.getPlayer()));
-            sendMessage(getEventJson(spigotPlayerJoinEvent));
+            spigotPlayerJoinEvent.setServerName(config.getServerName());
+            sendMessage(spigotPlayerJoinEvent);
         }
     }
 
@@ -54,7 +60,8 @@ class EventProcessor implements Listener {
     void onPlayerQuit(PlayerQuitEvent event) {
         if (config.isEnableQuitMessage()) {
             SpigotPlayerQuitEvent spigotPlayerQuitEvent = new SpigotPlayerQuitEvent(getSpigotPlayer(event.getPlayer()));
-            sendMessage(getEventJson(spigotPlayerQuitEvent));
+            spigotPlayerQuitEvent.setServerName(config.getServerName());
+            sendMessage(spigotPlayerQuitEvent);
         }
     }
 
@@ -65,8 +72,35 @@ class EventProcessor implements Listener {
             if (!(command.startsWith("/l ") || command.startsWith("/login ") || command.startsWith("/register ") || command.startsWith("/reg ") || command.startsWith("mcqq "))) {
                 command = command.replaceFirst("/", "");
                 SpigotPlayerCommandPreprocessEvent spigotPlayerCommandPreprocessEvent = new SpigotPlayerCommandPreprocessEvent(getSpigotPlayer(event.getPlayer()), command);
-                sendMessage(getEventJson(spigotPlayerCommandPreprocessEvent));
+                spigotPlayerCommandPreprocessEvent.setServerName(config.getServerName());
+                sendMessage(spigotPlayerCommandPreprocessEvent);
             }
         }
+    }
+
+    SpigotPlayer getSpigotPlayer(Player player) {
+        SpigotPlayer spigotPlayer = new SpigotPlayer();
+        spigotPlayer.setUuid(player.getUniqueId().toString());
+        spigotPlayer.setNickname(player.getName());
+        spigotPlayer.setDisplayName(player.getDisplayName());
+        spigotPlayer.setPlayerListName(player.getDisplayName());
+        spigotPlayer.setAddress((Objects.requireNonNull(player.getAddress()).toString()));
+        spigotPlayer.setHealthScale(player.getHealthScale());
+        spigotPlayer.setExp(player.getExp());
+        spigotPlayer.setTotalExp(player.getTotalExperience());
+        spigotPlayer.setLevel(player.getLevel());
+        spigotPlayer.setLocale(player.getLocale());
+        spigotPlayer.setPing(player.getPing());
+        spigotPlayer.setPlayerTime(player.getPlayerTime());
+        spigotPlayer.setPlayerTimeRelative(player.isPlayerTimeRelative());
+        spigotPlayer.setPlayerTimeOffset(player.getPlayerTimeOffset());
+        spigotPlayer.setWalkSpeed(player.getWalkSpeed());
+        spigotPlayer.setFlySpeed(player.getFlySpeed());
+        spigotPlayer.setAllowFlight(player.getAllowFlight());
+        spigotPlayer.setSprinting(player.isSprinting());
+        spigotPlayer.setSneaking(player.isSneaking());
+        spigotPlayer.setFlying(player.isFlying());
+        spigotPlayer.setOp(player.isOp());
+        return spigotPlayer;
     }
 }

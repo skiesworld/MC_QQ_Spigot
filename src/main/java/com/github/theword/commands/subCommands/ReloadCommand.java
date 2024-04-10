@@ -1,18 +1,19 @@
 package com.github.theword.commands.subCommands;
 
-import com.github.theword.Config;
-import com.github.theword.WsClient;
 import com.github.theword.commands.SubCommand;
 import com.github.theword.constant.CommandConstantMessage;
 import com.github.theword.constant.WebsocketConstantMessage;
+import com.github.theword.utils.Config;
+import com.github.theword.websocket.WsClient;
 import org.bukkit.command.CommandSender;
 
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.github.theword.MCQQ.config;
-import static com.github.theword.MCQQ.wsClientList;
+import static com.github.theword.utils.Tool.config;
+import static com.github.theword.utils.Tool.wsClientList;
 
 public class ReloadCommand extends SubCommand {
     @Override
@@ -42,7 +43,7 @@ public class ReloadCommand extends SubCommand {
         wsClientList.forEach(wsClient -> {
             if (!wsClient.isClosed() && !wsClient.isClosing()) {
                 commandSender.sendMessage(String.format(CommandConstantMessage.RELOAD_CLOSE_WEBSOCKET_CLIENT, wsClient.getURI()));
-                wsClient.close();
+                wsClient.stopWithoutReconnect(1000,"Reload config and reconnect.");
             }
             wsClient.getTimer().cancel();
         });
@@ -51,7 +52,7 @@ public class ReloadCommand extends SubCommand {
 
         config.getWebsocketUrlList().forEach(websocketUrl -> {
             try {
-                WsClient wsClient = new WsClient(websocketUrl);
+                WsClient wsClient = new WsClient(new URI(websocketUrl));
                 wsClient.connect();
                 wsClientList.add(wsClient);
             } catch (URISyntaxException e) {
