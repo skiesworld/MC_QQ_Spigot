@@ -53,7 +53,7 @@ public class ReconnectCommand extends SubCommand {
 
     @Override
     public List<String> getSubCommands(CommandSender commandSender, String[] args) {
-        return new ArrayList<>() {{
+        return new ArrayList<String>() {{
             add("all");
         }};
     }
