@@ -7,10 +7,11 @@ import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-import static com.github.theword.MCQQ.LOGGER;
+import static com.github.theword.utils.Tool.logger;
 
 public class ParseJsonToEvent {
 
@@ -30,27 +31,7 @@ public class ParseJsonToEvent {
         if (myBaseComponent instanceof MyTextComponent) {
             MyTextComponent myTextComponent = (MyTextComponent) myBaseComponent;
             if (myTextComponent.getClickEvent() != null) {
-                ClickEvent.Action tempAction = null;
-                switch (myTextComponent.getClickEvent().getAction()) {
-                    case "open_url":
-                        tempAction = ClickEvent.Action.OPEN_URL;
-                        break;
-                    case "open_file":
-                        tempAction = ClickEvent.Action.OPEN_FILE;
-                        break;
-                    case "run_command":
-                        tempAction = ClickEvent.Action.RUN_COMMAND;
-                        break;
-                    case "suggest_command":
-                        tempAction = ClickEvent.Action.SUGGEST_COMMAND;
-                        break;
-                    case "change_page":
-                        tempAction = ClickEvent.Action.CHANGE_PAGE;
-                        break;
-                    default:
-                        break;
-                }
-                ClickEvent clickEvent = new ClickEvent(tempAction, myTextComponent.getClickEvent().getValue());
+                ClickEvent clickEvent = getClickEvent(myTextComponent);
                 msgComponent.setClickEvent(clickEvent);
             }
 
@@ -79,6 +60,31 @@ public class ParseJsonToEvent {
         return msgComponent;
     }
 
+    @NotNull
+    private ClickEvent getClickEvent(MyTextComponent myTextComponent) {
+        ClickEvent.Action tempAction = null;
+        switch (myTextComponent.getClickEvent().getAction()) {
+            case "open_url":
+                tempAction = ClickEvent.Action.OPEN_URL;
+                break;
+            case "open_file":
+                tempAction = ClickEvent.Action.OPEN_FILE;
+                break;
+            case "run_command":
+                tempAction = ClickEvent.Action.RUN_COMMAND;
+                break;
+            case "suggest_command":
+                tempAction = ClickEvent.Action.SUGGEST_COMMAND;
+                break;
+            case "change_page":
+                tempAction = ClickEvent.Action.CHANGE_PAGE;
+                break;
+            default:
+                break;
+        }
+        return new ClickEvent(tempAction, myTextComponent.getClickEvent().getValue());
+    }
+
     /**
      * 将 MyBaseComponent 转换为 TextComponent
      *
@@ -97,7 +103,7 @@ public class ParseJsonToEvent {
                 msgLogText.append(myBaseComponent.getText());
             }
         }
-        LOGGER.info(msgLogText.toString());
+        logger.info(msgLogText.toString());
         return component;
     }
 

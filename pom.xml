@@ -78,6 +78,12 @@
         </dependency>
 
         <dependency>
+            <groupId>com.github.theword</groupId>
+            <artifactId>MC_QQ_Tool</artifactId>
+            <version>0.0.1</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.18.30</version>
