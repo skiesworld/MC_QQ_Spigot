@@ -9,6 +9,7 @@
         <project.minecraftVersion>1.12.2</project.minecraftVersion>
         <spigotmc.version>1.12.2-R0.1-SNAPSHOT</spigotmc.version>
         <lombok.version>1.18.30</lombok.version>
+        <mcqq-tool.version>0.0.1</mcqq-tool.version>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -81,9 +82,9 @@
         </dependency>
 
         <dependency>
-            <groupId>com.github.theword</groupId>
-            <artifactId>MC_QQ_Tool</artifactId>
-            <version>0.0.1</version>
+            <groupId>com.github.theword.mcqq</groupId>
+            <artifactId>mc-qq-tool</artifactId>
+            <version>${mcqq-tool.version}</version>
         </dependency>
     </dependencies>
 </project>

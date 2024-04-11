@@ -1,6 +1,6 @@
-package com.github.theword.commands.subCommands;
+package com.github.theword.mcqq.commands.subCommands;
 
-import com.github.theword.commands.SubCommand;
+import com.github.theword.mcqq.commands.SubCommand;
 import com.github.theword.constant.CommandConstantMessage;
 import org.bukkit.command.CommandSender;
 

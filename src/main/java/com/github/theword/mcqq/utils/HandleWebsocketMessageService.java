@@ -1,4 +1,4 @@
-package com.github.theword.utils;
+package com.github.theword.mcqq.utils;
 
 import com.github.theword.constant.WebsocketConstantMessage;
 import com.github.theword.returnBody.ActionbarReturnBody;
@@ -11,7 +11,7 @@ import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.entity.Player;
 
-import static com.github.theword.MCQQ.instance;
+import static com.github.theword.mcqq.MCQQ.instance;
 import static com.github.theword.utils.Tool.logger;
 
 public class HandleWebsocketMessageService implements HandleWebsocketMessage {

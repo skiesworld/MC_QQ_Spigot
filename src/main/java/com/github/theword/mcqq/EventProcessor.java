@@ -1,4 +1,4 @@
-package com.github.theword;
+package com.github.theword.mcqq;
 
 import com.github.theword.eventModels.spigot.*;
 import org.bukkit.entity.Player;
