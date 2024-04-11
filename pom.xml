@@ -15,7 +15,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-    <groupId>com.github.theword</groupId>
+    <groupId>com.github.theword.mcqq</groupId>
     <artifactId>MC_QQ_Spigot_${project.minecraftVersion}</artifactId>
     <version>${project.version}</version>
 
