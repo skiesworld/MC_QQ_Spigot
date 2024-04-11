@@ -1,7 +1,7 @@
-package com.github.theword.commands;
+package com.github.theword.mcqq.commands;
 
-import com.github.theword.commands.subCommands.ReconnectCommand;
-import com.github.theword.commands.subCommands.ReloadCommand;
+import com.github.theword.mcqq.commands.subCommands.ReconnectCommand;
+import com.github.theword.mcqq.commands.subCommands.ReloadCommand;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;

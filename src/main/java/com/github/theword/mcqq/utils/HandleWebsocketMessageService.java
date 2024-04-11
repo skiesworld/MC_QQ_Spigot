@@ -1,5 +1,6 @@
-package com.github.theword.utils;
+package com.github.theword.mcqq.utils;
 
+import com.github.theword.mcqq.MCQQ;
 import com.github.theword.constant.WebsocketConstantMessage;
 import com.github.theword.returnBody.ActionbarReturnBody;
 import com.github.theword.returnBody.BaseReturnBody;
@@ -11,7 +12,6 @@ import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.entity.Player;
 
-import static com.github.theword.MCQQ.instance;
 import static com.github.theword.utils.Tool.logger;
 
 public class HandleWebsocketMessageService implements HandleWebsocketMessage {
@@ -30,11 +30,11 @@ public class HandleWebsocketMessageService implements HandleWebsocketMessage {
             case "broadcast":
                 MessageReturnBody messageList = gson.fromJson(data, MessageReturnBody.class);
                 TextComponent textComponent = parseJsonToEvent.parseMessageToTextComponent(messageList.getMessageList());
-                instance.getServer().spigot().broadcast(textComponent);
+                MCQQ.instance.getServer().spigot().broadcast(textComponent);
                 break;
             case "send_title":
                 SendTitleReturnBody sendTitleReturnBody = gson.fromJson(data, SendTitleReturnBody.class);
-                for (Player player : instance.getServer().getOnlinePlayers()) {
+                for (Player player : MCQQ.instance.getServer().getOnlinePlayers()) {
                     player.sendTitle(
                             sendTitleReturnBody.getSendTitle().getTitle(),
                             sendTitleReturnBody.getSendTitle().getSubtitle(),
@@ -47,7 +47,7 @@ public class HandleWebsocketMessageService implements HandleWebsocketMessage {
             case "actionbar":
                 ActionbarReturnBody actionMessageList = gson.fromJson(data, ActionbarReturnBody.class);
                 TextComponent actionTextComponent = parseJsonToEvent.parseMessageToTextComponent(actionMessageList.getMessageList());
-                for (Player player : instance.getServer().getOnlinePlayers()) {
+                for (Player player : MCQQ.instance.getServer().getOnlinePlayers()) {
                     sendActionBar(player, actionTextComponent);
                 }
                 break;

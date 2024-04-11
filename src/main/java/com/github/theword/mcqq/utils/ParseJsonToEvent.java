@@ -1,4 +1,4 @@
-package com.github.theword.utils;
+package com.github.theword.mcqq.utils;
 
 import com.github.theword.returnBody.returnModle.MyBaseComponent;
 import com.github.theword.returnBody.returnModle.MyHoverEntity;

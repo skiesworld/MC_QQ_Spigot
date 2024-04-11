@@ -1,11 +1,11 @@
-package com.github.theword;
+package com.github.theword.mcqq;
 
 
-import com.github.theword.commands.CommandManager;
+import com.github.theword.mcqq.commands.CommandManager;
 import com.github.theword.constant.BaseConstant;
 import com.github.theword.constant.WebsocketConstantMessage;
 import com.github.theword.utils.Config;
-import com.github.theword.utils.HandleWebsocketMessageService;
+import com.github.theword.mcqq.utils.HandleWebsocketMessageService;
 import com.github.theword.websocket.WsClient;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
