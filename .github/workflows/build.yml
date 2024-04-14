@@ -1,0 +1,33 @@
+name: Maven Settings Action Example
+
+on:
+  push:
+    branches: ["dev-*"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: s4u/maven-settings-action@v3.0.0
+        with:
+          servers: |
+            [{
+                "id": "github",
+                "username": "${{ github.actor }}",
+                "password": "${{ secrets.PACKAGE_READ_ONLY_TOKEN }}"
+            }]
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
+          settings-path: ${{ github.workspace }} # location for the settings.xml file
+
+      - name: Build with Maven
+        run: mvn -B package --file pom.xml

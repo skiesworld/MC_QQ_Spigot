@@ -8,13 +8,14 @@
         <project.version>2.6.5</project.version>
         <project.minecraftVersion>1.14</project.minecraftVersion>
         <lombok.version>1.18.30</lombok.version>
+        <mcqq-tool.version>0.0.1</mcqq-tool.version>
         <spigotmc.version>1.20.1-R0.1-SNAPSHOT</spigotmc.version>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-    <groupId>com.github.theword</groupId>
+    <groupId>com.github.theword.mcqq</groupId>
     <artifactId>MC_QQ_Spigot_${project.minecraftVersion}-latest</artifactId>
     <version>${project.version}</version>
 
@@ -26,6 +27,13 @@
         <repository>
             <id>sonatype</id>
             <url>https://oss.sonatype.org/content/groups/public/</url>
+        </repository>
+        <repository>
+          <id>github</id>
+          <url>https://maven.pkg.github.com/17TheWord/MC_QQ_Tool</url>
+          <snapshots>
+            <enabled>true</enabled>
+          </snapshots>
         </repository>
     </repositories>
 
@@ -74,9 +82,9 @@
         </dependency>
 
         <dependency>
-            <groupId>com.github.theword</groupId>
-            <artifactId>MC_QQ_Tool</artifactId>
-            <version>0.0.1</version>
+            <groupId>com.github.theword.mcqq</groupId>
+            <artifactId>mc-qq-tool</artifactId>
+            <version>${mcqq-tool.version}</version>
         </dependency>
 
         <dependency>
