@@ -5,7 +5,7 @@
 
 ## 使用
 
-前往适配器的 [Wiki](https://github.com/17TheWord/nonebot-adapter-minecraft/wiki)
+前往适配器的 [`Wiki`](https://github.com/17TheWord/nonebot-adapter-minecraft/wiki)
 
 ## 自行构建
 
@@ -16,10 +16,18 @@
     cd MC_QQ_Spigot
     ```
 
-2. 构建项目
+2. 配置工具包仓库的个人访问令牌
+   - `mc-qq-tool` 依赖位于 https://github.com/17TheWord/MC_QQ_Tool
+   - 需要配置只读的 `Package Token`
+   - 参考 [GitHub Packages 文档](https://docs.github.com/zh/packages/working-with-a-github-packages-registry/working-with-the-apache-maven-registry#%E4%BD%BF%E7%94%A8-personal-access-token)
+   - 该项目使用的变量名
+      - `USERNAME`：GitHub 用户名
+      - `PACKAGE_READ_ONLY_TOKEN`：GitHub 个人访问令牌
+
+3. 构建项目
 
     ```shell
-    mvn install
+    mvn package
     ```
 
 ## 贡献与支持
