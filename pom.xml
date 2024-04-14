@@ -28,6 +28,13 @@
             <id>sonatype</id>
             <url>https://oss.sonatype.org/content/groups/public/</url>
         </repository>
+        <repository>
+          <id>github</id>
+          <url>https://maven.pkg.github.com/17TheWord/MC_QQ_Tool</url>
+          <snapshots>
+            <enabled>true</enabled>
+          </snapshots>
+        </repository>
     </repositories>
 
     <build>
