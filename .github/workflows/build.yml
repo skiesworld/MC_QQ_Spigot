@@ -1,4 +1,4 @@
-name: Maven Settings Action Example
+name: Build Maven Package
 
 on:
   push:
