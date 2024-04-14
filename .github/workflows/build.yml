@@ -17,7 +17,7 @@ jobs:
         with:
           servers: |
             [{
-                "id": "sonatype-nexus-snapshots",
+                "id": "github",
                 "username": "${{ github.actor }}",
                 "password": "${{ secrets.PACKAGE_READ_ONLY_TOKEN }}"
             }]
