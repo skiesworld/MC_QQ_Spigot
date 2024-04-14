@@ -1,6 +1,6 @@
 package com.github.theword.mcqq;
 
-import com.github.theword.eventModels.spigot.*;
+import com.github.theword.mcqq.eventModels.spigot.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -12,8 +12,8 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 import java.util.Objects;
 
-import static com.github.theword.utils.Tool.config;
-import static com.github.theword.utils.Tool.sendMessage;
+import static com.github.theword.mcqq.utils.Tool.config;
+import static com.github.theword.mcqq.utils.Tool.sendMessage;
 
 
 class EventProcessor implements Listener {

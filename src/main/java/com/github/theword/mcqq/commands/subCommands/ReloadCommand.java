@@ -1,10 +1,10 @@
 package com.github.theword.mcqq.commands.subCommands;
 
 import com.github.theword.mcqq.commands.SubCommand;
-import com.github.theword.constant.CommandConstantMessage;
-import com.github.theword.constant.WebsocketConstantMessage;
-import com.github.theword.utils.Config;
-import com.github.theword.websocket.WsClient;
+import com.github.theword.mcqq.constant.CommandConstantMessage;
+import com.github.theword.mcqq.constant.WebsocketConstantMessage;
+import com.github.theword.mcqq.utils.Config;
+import com.github.theword.mcqq.websocket.WsClient;
 import org.bukkit.command.CommandSender;
 
 import java.net.URI;
@@ -12,8 +12,8 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.github.theword.utils.Tool.config;
-import static com.github.theword.utils.Tool.wsClientList;
+import static com.github.theword.mcqq.utils.Tool.config;
+import static com.github.theword.mcqq.utils.Tool.wsClientList;
 
 public class ReloadCommand extends SubCommand {
     @Override

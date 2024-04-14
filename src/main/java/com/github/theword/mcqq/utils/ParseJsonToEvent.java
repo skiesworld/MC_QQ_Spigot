@@ -1,9 +1,9 @@
 package com.github.theword.mcqq.utils;
 
-import com.github.theword.returnBody.returnModle.MyBaseComponent;
-import com.github.theword.returnBody.returnModle.MyHoverEntity;
-import com.github.theword.returnBody.returnModle.MyHoverItem;
-import com.github.theword.returnBody.returnModle.MyTextComponent;
+import com.github.theword.mcqq.returnBody.returnModle.MyBaseComponent;
+import com.github.theword.mcqq.returnBody.returnModle.MyHoverEntity;
+import com.github.theword.mcqq.returnBody.returnModle.MyHoverItem;
+import com.github.theword.mcqq.returnBody.returnModle.MyTextComponent;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.*;
 import net.md_5.bungee.api.chat.hover.content.Entity;
@@ -12,7 +12,7 @@ import net.md_5.bungee.api.chat.hover.content.Text;
 
 import java.util.List;
 
-import static com.github.theword.utils.Tool.logger;
+import static com.github.theword.mcqq.utils.Tool.logger;
 
 public class ParseJsonToEvent {
 
