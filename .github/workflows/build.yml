@@ -2,7 +2,7 @@ name: Build Maven Package
 
 on:
   push:
-    branches: [ "dev-*" ]
+    branches: [ "!dev-*" ]
 
 jobs:
   build:
