@@ -2,14 +2,12 @@ name: Build Maven Package
 
 on:
   push:
-    branches: ["dev-*"]
+    branches: [ "!dev-*" ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
+
     steps:
       - uses: actions/checkout@v4
 
@@ -26,8 +24,13 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-          server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
-          settings-path: ${{ github.workspace }} # location for the settings.xml file
+          server-id: github
+          settings-path: ${{ github.workspace }}
 
       - name: Build with Maven
         run: mvn -B package --file pom.xml
+
+      - name: Push to GitHub Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          path: target/MC_*.jar
