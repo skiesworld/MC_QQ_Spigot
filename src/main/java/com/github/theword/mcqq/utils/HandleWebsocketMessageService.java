@@ -1,18 +1,18 @@
-package com.github.theword.utils;
+package com.github.theword.mcqq.utils;
 
-import com.github.theword.constant.WebsocketConstantMessage;
-import com.github.theword.returnBody.ActionbarReturnBody;
-import com.github.theword.returnBody.BaseReturnBody;
-import com.github.theword.returnBody.MessageReturnBody;
-import com.github.theword.returnBody.SendTitleReturnBody;
+import com.github.theword.mcqq.constant.WebsocketConstantMessage;
+import com.github.theword.mcqq.returnBody.ActionbarReturnBody;
+import com.github.theword.mcqq.returnBody.BaseReturnBody;
+import com.github.theword.mcqq.returnBody.MessageReturnBody;
+import com.github.theword.mcqq.returnBody.SendTitleReturnBody;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.entity.Player;
 
-import static com.github.theword.MCQQ.instance;
-import static com.github.theword.utils.Tool.logger;
+import static com.github.theword.mcqq.MCQQ.instance;
+import static com.github.theword.mcqq.utils.Tool.logger;
 
 public class HandleWebsocketMessageService implements HandleWebsocketMessage {
 

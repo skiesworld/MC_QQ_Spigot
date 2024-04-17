@@ -1,12 +1,12 @@
-package com.github.theword;
+package com.github.theword.mcqq;
 
 
-import com.github.theword.commands.CommandManager;
-import com.github.theword.constant.BaseConstant;
-import com.github.theword.constant.WebsocketConstantMessage;
-import com.github.theword.utils.Config;
-import com.github.theword.utils.HandleWebsocketMessageService;
-import com.github.theword.websocket.WsClient;
+import com.github.theword.mcqq.commands.CommandManager;
+import com.github.theword.mcqq.constant.BaseConstant;
+import com.github.theword.mcqq.constant.WebsocketConstantMessage;
+import com.github.theword.mcqq.utils.Config;
+import com.github.theword.mcqq.utils.HandleWebsocketMessageService;
+import com.github.theword.mcqq.websocket.WsClient;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.slf4j.LoggerFactory;
@@ -16,7 +16,7 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Objects;
 
-import static com.github.theword.utils.Tool.*;
+import static com.github.theword.mcqq.utils.Tool.*;
 
 public final class MCQQ extends JavaPlugin {
     public static JavaPlugin instance;

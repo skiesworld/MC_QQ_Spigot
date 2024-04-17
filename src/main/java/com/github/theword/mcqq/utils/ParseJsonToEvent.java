@@ -1,7 +1,7 @@
-package com.github.theword.utils;
+package com.github.theword.mcqq.utils;
 
-import com.github.theword.returnBody.returnModle.MyBaseComponent;
-import com.github.theword.returnBody.returnModle.MyTextComponent;
+import com.github.theword.mcqq.returnBody.returnModle.MyBaseComponent;
+import com.github.theword.mcqq.returnBody.returnModle.MyTextComponent;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ClickEvent;
@@ -11,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-import static com.github.theword.utils.Tool.logger;
+import static com.github.theword.mcqq.utils.Tool.logger;
 
 public class ParseJsonToEvent {
 

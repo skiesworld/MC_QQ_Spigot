@@ -1,6 +1,6 @@
 name: MC_QQ
 version: ${project.version}
-main: com.github.theword.MCQQ
+main: com.github.theword.mcqq.MCQQ
 api-version: ${project.minecraftVersion}
 authors: [ 17TheWord ]
 description: Connect to nonebot2.
