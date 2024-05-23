@@ -5,6 +5,7 @@ import com.github.theword.mcqq.commands.SpigotSubCommand;
 import com.github.theword.mcqq.commands.SubCommand;
 import org.bukkit.command.CommandSender;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class HelpCommand extends HelpCommandAbstract implements SpigotSubCommand {
@@ -20,7 +21,7 @@ public class HelpCommand extends HelpCommandAbstract implements SpigotSubCommand
 
     @Override
     public List<String> getSubCommands(CommandSender commandSender, String[] args) {
-        return null;
+        return new ArrayList<>();
     }
 
     @Override
