@@ -1,60 +1,38 @@
 package com.github.theword.mcqq;
 
 
-import com.github.theword.mcqq.commands.CommandManager;
+import com.github.theword.mcqq.commands.CommandExecutor;
 import com.github.theword.mcqq.constant.BaseConstant;
 import com.github.theword.mcqq.constant.WebsocketConstantMessage;
-import com.github.theword.mcqq.utils.Config;
-import com.github.theword.mcqq.utils.HandleWebsocketMessageService;
-import com.github.theword.mcqq.websocket.WsClient;
+import com.github.theword.mcqq.handleMessage.HandleApiService;
+import com.github.theword.mcqq.handleMessage.HandleCommandReturnMessageService;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.slf4j.LoggerFactory;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.ArrayList;
 import java.util.Objects;
 
-import static com.github.theword.mcqq.utils.Tool.*;
+import static com.github.theword.mcqq.utils.Tool.initTool;
+import static com.github.theword.mcqq.utils.Tool.websocketManager;
 
 public final class MCQQ extends JavaPlugin {
     public static JavaPlugin instance;
 
     @Override
     public void onLoad() {
-        logger = LoggerFactory.getLogger("");
-        handleWebsocketMessage = new HandleWebsocketMessageService();
-        config = new Config(false);
-        wsClientList = new ArrayList<>();
-        logger.info(BaseConstant.INITIALIZED);
+        initTool(false, new HandleApiService(), new HandleCommandReturnMessageService());
     }
 
     @Override
     public void onEnable() {
         instance = this;
-        logger.info(WebsocketConstantMessage.WEBSOCKET_RUNNING);
-        config.getWebsocketUrlList().forEach(websocketUrl -> {
-            try {
-                WsClient wsClient = new WsClient(new URI(websocketUrl));
-                wsClient.connect();
-                wsClientList.add(wsClient);
-            } catch (URISyntaxException e) {
-                logger.warn(String.format(WebsocketConstantMessage.WEBSOCKET_ERROR_URI_SYNTAX_ERROR, websocketUrl));
-            }
-        });
+        websocketManager.startWebsocket(false);
         Bukkit.getPluginManager().registerEvents(new EventProcessor(), this);
-        Objects.requireNonNull(getCommand("mcqq")).setExecutor(new CommandManager());
+        Objects.requireNonNull(getCommand(BaseConstant.COMMAND_HEADER)).setExecutor(new CommandExecutor());
     }
 
     @Override
     public void onDisable() {
-        wsClientList.forEach(
-                wsClient -> wsClient.stopWithoutReconnect(
-                        1000,
-                        String.format(WebsocketConstantMessage.WEBSOCKET_CLOSING, wsClient.getURI())
-                )
-        );
+        websocketManager.stopWebsocket(1000, WebsocketConstantMessage.Client.CLOSING, null);
     }
 
 }

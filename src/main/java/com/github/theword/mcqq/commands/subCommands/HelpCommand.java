@@ -1,17 +1,21 @@
 package com.github.theword.mcqq.commands.subCommands;
 
+import com.github.theword.mcqq.commands.CommandManager;
 import com.github.theword.mcqq.commands.SpigotSubCommand;
+import com.github.theword.mcqq.commands.SubCommand;
 import org.bukkit.command.CommandSender;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.github.theword.mcqq.utils.Tool.websocketManager;
-
-public class ReloadCommand extends ReloadCommandAbstract implements SpigotSubCommand {
+public class HelpCommand extends HelpCommandAbstract implements SpigotSubCommand {
     @Override
     public boolean onCommand(CommandSender commandSender, String[] args) {
-        websocketManager.reloadWebsocket(false, commandSender);
+        commandSender.sendMessage("-------------------");
+        for (SubCommand subCommand : new CommandManager().getSpigotSubCommandList()) {
+            commandSender.sendMessage(subCommand.getUsage() + "---" + subCommand.getDescription());
+        }
+        commandSender.sendMessage("-------------------");
         return true;
     }
 

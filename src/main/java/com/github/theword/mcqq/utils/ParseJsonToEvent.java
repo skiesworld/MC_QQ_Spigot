@@ -9,6 +9,7 @@ import net.md_5.bungee.api.chat.*;
 import net.md_5.bungee.api.chat.hover.content.Entity;
 import net.md_5.bungee.api.chat.hover.content.Item;
 import net.md_5.bungee.api.chat.hover.content.Text;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -32,30 +33,7 @@ public class ParseJsonToEvent {
         if (myBaseComponent instanceof MyTextComponent) {
             MyTextComponent myTextComponent = (MyTextComponent) myBaseComponent;
             if (myTextComponent.getClickEvent() != null) {
-                ClickEvent.Action tempAction = null;
-                switch (myTextComponent.getClickEvent().getAction()) {
-                    case "open_url":
-                        tempAction = ClickEvent.Action.OPEN_URL;
-                        break;
-                    case "open_file":
-                        tempAction = ClickEvent.Action.OPEN_FILE;
-                        break;
-                    case "run_command":
-                        tempAction = ClickEvent.Action.RUN_COMMAND;
-                        break;
-                    case "suggest_command":
-                        tempAction = ClickEvent.Action.SUGGEST_COMMAND;
-                        break;
-                    case "change_page":
-                        tempAction = ClickEvent.Action.CHANGE_PAGE;
-                        break;
-                    case "copy_to_clipboard":
-                        tempAction = ClickEvent.Action.COPY_TO_CLIPBOARD;
-                        break;
-                    default:
-                        break;
-                }
-                ClickEvent clickEvent = new ClickEvent(tempAction, myTextComponent.getClickEvent().getValue());
+                ClickEvent clickEvent = getClickEvent(myTextComponent);
                 msgComponent.setClickEvent(clickEvent);
             }
 
@@ -86,6 +64,34 @@ public class ParseJsonToEvent {
             }
         }
         return msgComponent;
+    }
+
+    @NotNull
+    private static ClickEvent getClickEvent(MyTextComponent myTextComponent) {
+        ClickEvent.Action tempAction = null;
+        switch (myTextComponent.getClickEvent().getAction()) {
+            case "open_url":
+                tempAction = ClickEvent.Action.OPEN_URL;
+                break;
+            case "open_file":
+                tempAction = ClickEvent.Action.OPEN_FILE;
+                break;
+            case "run_command":
+                tempAction = ClickEvent.Action.RUN_COMMAND;
+                break;
+            case "suggest_command":
+                tempAction = ClickEvent.Action.SUGGEST_COMMAND;
+                break;
+            case "change_page":
+                tempAction = ClickEvent.Action.CHANGE_PAGE;
+                break;
+            case "copy_to_clipboard":
+                tempAction = ClickEvent.Action.COPY_TO_CLIPBOARD;
+                break;
+            default:
+                break;
+        }
+        return new ClickEvent(tempAction, myTextComponent.getClickEvent().getValue());
     }
 
     /**
@@ -150,7 +156,5 @@ public class ParseJsonToEvent {
             default:
                 return ChatColor.WHITE;
         }
-
     }
-
 }
