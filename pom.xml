@@ -5,11 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <properties>
-        <project.version>2.6.6</project.version>
+        <project.version>2.7.0</project.version>
         <project.minecraftVersion>1.12.2</project.minecraftVersion>
         <spigotmc.version>1.12.2-R0.1-SNAPSHOT</spigotmc.version>
         <lombok.version>1.18.30</lombok.version>
-        <mcqq-tool.version>0.0.1</mcqq-tool.version>
+        <mcqq-tool.version>0.0.4</mcqq-tool.version>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
