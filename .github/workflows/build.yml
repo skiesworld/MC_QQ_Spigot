@@ -41,7 +41,7 @@ jobs:
         if: github.event_name == 'push'
         run: |
           ARTIFACT_FILE=$(find $BUILD_DIR -name $JAR_PATTERN -maxdepth 1)
-          ARTIFACT_NAME=$(basename -- "$ARTIFACT_FILE")
+          ARTIFACT_NAME=$(basename -- "$ARTIFACT_FILE" .jar)
 
           echo "ARTIFACT_NAME=$ARTIFACT_NAME" >> $GITHUB_ENV
           echo "ARTIFACT_FILE=$ARTIFACT_FILE" >> $GITHUB_ENV
