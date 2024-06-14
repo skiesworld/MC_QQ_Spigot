@@ -4,11 +4,27 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <profiles>
+        <profile>
+            <id>github</id>
+            <properties>
+                <project.version>${env.MC_QQ_VERSION}</project.version>
+                <mcqq-tool.version>${env.MCQQ_TOOL_VERSION}</mcqq-tool.version>
+            </properties>
+        </profile>
+        <profile>
+            <id>local</id>
+            <properties>
+                <project.version>2.7.0</project.version>
+                <mcqq-tool.version>0.0.5</mcqq-tool.version>
+            </properties>
+        </profile>
+    </profiles>
+
     <properties>
-        <project.version>2.7.0</project.version>
         <project.minecraftVersion>1.14</project.minecraftVersion>
+        <!--suppress UnresolvedMavenProperty -->
         <lombok.version>1.18.30</lombok.version>
-        <mcqq-tool.version>${env.MCQQ_TOOL_VERSION}</mcqq-tool.version>
         <spigotmc.version>1.20.1-R0.1-SNAPSHOT</spigotmc.version>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
@@ -29,11 +45,11 @@
             <url>https://oss.sonatype.org/content/groups/public/</url>
         </repository>
         <repository>
-          <id>github</id>
-          <url>https://maven.pkg.github.com/17TheWord/MC_QQ_Tool</url>
-          <snapshots>
-            <enabled>true</enabled>
-          </snapshots>
+            <id>github</id>
+            <url>https://maven.pkg.github.com/17TheWord/MC_QQ_Tool</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
         </repository>
     </repositories>
 
