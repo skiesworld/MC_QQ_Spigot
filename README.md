@@ -20,10 +20,14 @@
     - `mc-qq-tool` 依赖位于 https://github.com/17TheWord/MC_QQ_Tool
     - 需要配置只读的 `Package Token`
     - 参考 [GitHub Packages 文档](https://docs.github.com/zh/packages/working-with-a-github-packages-registry/working-with-the-apache-maven-registry#%E5%90%91-github-packages-%E9%AA%8C%E8%AF%81)
-    - 该项目使用的变量名
-        - `USERNAME`：GitHub 用户名
-        - `MCQQ_TOOL_VERSION`：工具包版本号
-        - `PACKAGE_READ_ONLY_TOKEN`：GitHub 个人访问令牌
+    - 该项目使用的环境变量名
+      - 必填
+          - `USERNAME`：GitHub 用户名
+          - `PACKAGE_READ_ONLY_TOKEN`：GitHub 个人访问令牌
+      - 可选
+          - `MC_QQ_VERSION`：项目版本号（或在 `gradle.properties` 中通过 `mod_version=x.x.x` 配置版本号）
+          - `MCQQ_TOOL_VERSION`：工具包版本号（或在 `gradle.properties` 中通过 `mcqq_tool_version=x.x.x` 配置版本号）
+          - `LOMBOK_VERSION`：Lombok 版本号（或在 `gradle.properties` 中通过 `lombok_version=x.x.x` 配置版本号）
 
 3. 构建项目
 
