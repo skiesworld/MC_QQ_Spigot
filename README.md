@@ -25,9 +25,8 @@
           - `USERNAME`：GitHub 用户名
           - `PACKAGE_READ_ONLY_TOKEN`：GitHub 个人访问令牌
       - 可选
-          - `MC_QQ_VERSION`：项目版本号（或在 `gradle.properties` 中通过 `mod_version=x.x.x` 配置版本号）
-          - `MCQQ_TOOL_VERSION`：工具包版本号（或在 `gradle.properties` 中通过 `mcqq_tool_version=x.x.x` 配置版本号）
-          - `LOMBOK_VERSION`：Lombok 版本号（或在 `gradle.properties` 中通过 `lombok_version=x.x.x` 配置版本号）
+          - `MC_QQ_VERSION`：项目版本号（（使用 `github` 配置项构建或使用 `local` 配置项自行编辑））
+          - `MCQQ_TOOL_VERSION`：工具包版本号（（使用 `github` 配置项构建或使用 `local` 配置项自行编辑））
 
 3. 构建项目
 
