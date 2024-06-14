@@ -11,12 +11,6 @@
                 <project.version>${env.MC_QQ_VERSION}</project.version>
                 <mcqq-tool.version>${env.MCQQ_TOOL_VERSION}</mcqq-tool.version>
             </properties>
-            <repositories>
-                <repository>
-                    <id>central</id>
-                    <url>https://repo1.maven.org/maven2</url>
-                </repository>
-            </repositories>
         </profile>
         <profile>
             <id>local</id>
