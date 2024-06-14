@@ -22,6 +22,7 @@
     - 参考 [GitHub Packages 文档](https://docs.github.com/zh/packages/working-with-a-github-packages-registry/working-with-the-apache-maven-registry#%E5%90%91-github-packages-%E9%AA%8C%E8%AF%81)
     - 该项目使用的变量名
         - `USERNAME`：GitHub 用户名
+        - `MCQQ_TOOL_VERSION`：工具包版本号
         - `PACKAGE_READ_ONLY_TOKEN`：GitHub 个人访问令牌
 
 3. 构建项目
