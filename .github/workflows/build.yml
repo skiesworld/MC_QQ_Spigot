@@ -37,7 +37,7 @@ jobs:
           settings-path: ${{ github.workspace }}
 
       - name: Build with Maven
-        run: mvn -B package --file pom.xml
+        run: mvn -P github -B package --file pom.xml
 
       - name: Find Artifact Name
         if: github.event_name == 'push'
