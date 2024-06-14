@@ -6,14 +6,13 @@
 
     <properties>
         <project.version>${env.MC_QQ_VERSION}</project.version>
-        <default.project.version>2.7.0</default.project.version>
+        <env.MC_QQ_VERSION>2.7.0</env.MC_QQ_VERSION>
         <project.minecraftVersion>1.12.2</project.minecraftVersion>
         <spigotmc.version>1.12.2-R0.1-SNAPSHOT</spigotmc.version>
-        <!--suppress UnresolvedMavenProperty -->
         <lombok.version>${env.LOMBOK_VERSION}</lombok.version>
-        <default.lombok.version>1.18.30</default.lombok.version>
+        <env.LOMBOK_VERSION>1.18.30</env.LOMBOK_VERSION>
         <mcqq-tool.version>${env.MCQQ_TOOL_VERSION}</mcqq-tool.version>
-        <default.mcqq-tool.version>0.0.5</default.mcqq-tool.version>
+        <env.MCQQ_TOOL_VERSION>0.0.5</env.MCQQ_TOOL_VERSION>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
