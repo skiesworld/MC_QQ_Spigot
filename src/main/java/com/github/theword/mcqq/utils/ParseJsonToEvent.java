@@ -20,7 +20,7 @@ public class ParseJsonToEvent {
 
         // 配置 BaseComponent 基本属性
         msgComponent.setText(myBaseComponent.getText());
-        msgComponent.setColor(getColor(myBaseComponent.getColor()));
+        msgComponent.setColor(ChatColor.valueOf(myBaseComponent.getColor()));
         msgComponent.setBold(myBaseComponent.isBold());
         msgComponent.setItalic(myBaseComponent.isItalic());
         msgComponent.setUnderlined(myBaseComponent.isUnderlined());
@@ -92,16 +92,13 @@ public class ParseJsonToEvent {
      * @return TextComponent
      */
     public TextComponent parseMessageToTextComponent(List<? extends MyBaseComponent> myBaseComponentList) {
-        TextComponent component = new TextComponent();
+        TextComponent component = parsePerMessageToTextComponent(Tool.getPrefixComponent());
         StringBuilder msgLogText = new StringBuilder();
 
         for (MyBaseComponent myBaseComponent : myBaseComponentList) {
             TextComponent msgComponent = parsePerMessageToTextComponent(myBaseComponent);
             component.addExtra(msgComponent);
-
-            if (!myBaseComponent.getText().equals("[MC_QQ] ")) {
-                msgLogText.append(myBaseComponent.getText());
-            }
+            msgLogText.append(myBaseComponent.getText());
         }
         logger.info(msgLogText.toString());
         return component;
