@@ -4,6 +4,7 @@ import com.github.theword.mcqq.returnBody.returnModle.MyBaseComponent;
 import com.github.theword.mcqq.returnBody.returnModle.MyTextComponent;
 import com.github.theword.mcqq.returnBody.returnModle.SendTitle;
 import com.github.theword.mcqq.utils.ParseJsonToEvent;
+import com.github.theword.mcqq.utils.Tool;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.entity.Player;
@@ -19,7 +20,8 @@ public class HandleApiService implements HandleApi {
 
     @Override
     public void handleBroadcastMessage(WebSocket webSocket, List<MyTextComponent> messageList) {
-        TextComponent textComponent = parseJsonToEvent.parseMessageToTextComponent(messageList);
+        TextComponent textComponent = parseJsonToEvent.parsePerMessageToTextComponent(Tool.getPrefixComponent());
+        textComponent.addExtra(parseJsonToEvent.parseMessageToTextComponent(messageList));
         instance.getServer().spigot().broadcast(textComponent);
     }
 
