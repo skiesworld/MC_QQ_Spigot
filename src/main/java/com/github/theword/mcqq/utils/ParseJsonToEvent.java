@@ -102,7 +102,7 @@ public class ParseJsonToEvent {
      * @return TextComponent
      */
     public TextComponent parseMessageToTextComponent(List<? extends MyBaseComponent> myBaseComponentList) {
-        TextComponent component = parsePerMessageToTextComponent(Tool.getPrefixComponent());
+        TextComponent component = new TextComponent();
         StringBuilder msgLogText = new StringBuilder();
 
         for (MyBaseComponent myBaseComponent : myBaseComponentList) {
