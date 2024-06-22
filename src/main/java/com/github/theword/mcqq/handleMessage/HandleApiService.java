@@ -27,9 +27,12 @@ public class HandleApiService implements HandleApi {
 
     @Override
     public void handleSendTitleMessage(WebSocket webSocket, SendTitle sendTitle) {
+        String title = parseJsonToEvent.parseMyBaseCommentToStringWithStyle(sendTitle.getTitle());
+        String subtitle = parseJsonToEvent.parseMyBaseCommentToStringWithStyle(sendTitle.getSubtitle());
         for (Player player : instance.getServer().getOnlinePlayers()) {
-            player.sendTitle(parseJsonToEvent.parseMyBaseCommentToStringWithStyle(sendTitle.getTitle()),
-                    parseJsonToEvent.parseMyBaseCommentToStringWithStyle(sendTitle.getSubtitle()),
+            player.sendTitle(
+                    title,
+                    subtitle,
                     sendTitle.getFadein(),
                     sendTitle.getStay(),
                     sendTitle.getFadeout()
