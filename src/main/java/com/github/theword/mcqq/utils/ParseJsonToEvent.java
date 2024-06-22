@@ -20,7 +20,8 @@ public class ParseJsonToEvent {
 
         // 配置 BaseComponent 基本属性
         msgComponent.setText(myBaseComponent.getText());
-        msgComponent.setColor(ChatColor.valueOf(myBaseComponent.getColor()));
+        if (myBaseComponent.getColor() != null && !myBaseComponent.getColor().isEmpty())
+            msgComponent.setColor(ChatColor.valueOf(myBaseComponent.getColor()));
         msgComponent.setBold(myBaseComponent.isBold());
         msgComponent.setItalic(myBaseComponent.isItalic());
         msgComponent.setUnderlined(myBaseComponent.isUnderlined());
@@ -114,7 +115,7 @@ public class ParseJsonToEvent {
             if (myBaseComponent.isUnderlined()) tempMessageSeg += ChatColor.UNDERLINE;
             if (myBaseComponent.isStrikethrough()) tempMessageSeg += ChatColor.STRIKETHROUGH;
             if (myBaseComponent.isObfuscated()) tempMessageSeg += ChatColor.MAGIC;
-            if (myBaseComponent.getColor() != null)
+            if (myBaseComponent.getColor() != null && !myBaseComponent.getColor().isEmpty())
                 tempMessageSeg += ChatColor.valueOf(myBaseComponent.getColor().toUpperCase());
             tempMessageSeg += myBaseComponent.getText();
             message.append(tempMessageSeg);
