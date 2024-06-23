@@ -22,7 +22,9 @@ public class ParseJsonToEvent {
 
         // 配置 BaseComponent 基本属性
         msgComponent.setText(myBaseComponent.getText());
-        msgComponent.setColor(getColor(myBaseComponent.getColor()));
+        if (myBaseComponent.getColor() != null && !myBaseComponent.getColor().isEmpty())
+            msgComponent.setColor(ChatColor.of(myBaseComponent.getColor()));
+        else msgComponent.setColor(ChatColor.WHITE);
         msgComponent.setBold(myBaseComponent.isBold());
         msgComponent.setItalic(myBaseComponent.isItalic());
         msgComponent.setUnderlined(myBaseComponent.isUnderlined());
@@ -107,54 +109,28 @@ public class ParseJsonToEvent {
         for (MyBaseComponent myBaseComponent : myBaseComponentList) {
             TextComponent msgComponent = parsePerMessageToTextComponent(myBaseComponent);
             component.addExtra(msgComponent);
-
-            if (!myBaseComponent.getText().equals("[MC_QQ] ")) {
-                msgLogText.append(myBaseComponent.getText());
-            }
+            msgLogText.append(myBaseComponent.getText());
         }
         logger.info(msgLogText.toString());
         return component;
     }
 
-    /**
-     * @param color 颜色
-     * @return ChatColor 对象
-     */
-    ChatColor getColor(String color) {
-        switch (color) {
-            case "black":
-                return ChatColor.BLACK;
-            case "dark_blue":
-                return ChatColor.DARK_BLUE;
-            case "dark_green":
-                return ChatColor.DARK_GREEN;
-            case "dark_aqua":
-                return ChatColor.DARK_AQUA;
-            case "dark_red":
-                return ChatColor.DARK_RED;
-            case "dark_purple":
-                return ChatColor.DARK_PURPLE;
-            case "gold":
-                return ChatColor.GOLD;
-            case "gray":
-                return ChatColor.GRAY;
-            case "dark_gray":
-                return ChatColor.DARK_GRAY;
-            case "blue":
-                return ChatColor.BLUE;
-            case "green":
-                return ChatColor.GREEN;
-            case "aqua":
-                return ChatColor.AQUA;
-            case "red":
-                return ChatColor.RED;
-            case "light_purple":
-                return ChatColor.LIGHT_PURPLE;
-            case "yellow":
-                return ChatColor.YELLOW;
-            case "white":
-            default:
-                return ChatColor.WHITE;
+    public String parseMyBaseCommentToStringWithStyle(List<? extends MyBaseComponent> myBaseComponentList) {
+        StringBuilder message = new StringBuilder();
+
+        for (MyBaseComponent myBaseComponent : myBaseComponentList) {
+            String tempMessageSeg = "";
+            if (myBaseComponent.isBold()) tempMessageSeg += ChatColor.BOLD;
+            if (myBaseComponent.isItalic()) tempMessageSeg += ChatColor.ITALIC;
+            if (myBaseComponent.isUnderlined()) tempMessageSeg += ChatColor.UNDERLINE;
+            if (myBaseComponent.isStrikethrough()) tempMessageSeg += ChatColor.STRIKETHROUGH;
+            if (myBaseComponent.isObfuscated()) tempMessageSeg += ChatColor.MAGIC;
+            if (myBaseComponent.getColor() != null && !myBaseComponent.getColor().isEmpty())
+                tempMessageSeg += ChatColor.of(myBaseComponent.getColor().toUpperCase());
+            else tempMessageSeg += ChatColor.WHITE;
+            tempMessageSeg += myBaseComponent.getText();
+            message.append(tempMessageSeg);
         }
+        return message.toString();
     }
 }
