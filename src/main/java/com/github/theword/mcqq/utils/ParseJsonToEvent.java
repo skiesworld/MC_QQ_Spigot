@@ -24,6 +24,7 @@ public class ParseJsonToEvent {
         msgComponent.setText(myBaseComponent.getText());
         if (myBaseComponent.getColor() != null && !myBaseComponent.getColor().isEmpty())
             msgComponent.setColor(ChatColor.of(myBaseComponent.getColor()));
+        else msgComponent.setColor(ChatColor.WHITE);
         msgComponent.setBold(myBaseComponent.isBold());
         msgComponent.setItalic(myBaseComponent.isItalic());
         msgComponent.setUnderlined(myBaseComponent.isUnderlined());
@@ -126,6 +127,7 @@ public class ParseJsonToEvent {
             if (myBaseComponent.isObfuscated()) tempMessageSeg += ChatColor.MAGIC;
             if (myBaseComponent.getColor() != null && !myBaseComponent.getColor().isEmpty())
                 tempMessageSeg += ChatColor.of(myBaseComponent.getColor().toUpperCase());
+            else tempMessageSeg += ChatColor.RESET;
             tempMessageSeg += myBaseComponent.getText();
             message.append(tempMessageSeg);
         }
