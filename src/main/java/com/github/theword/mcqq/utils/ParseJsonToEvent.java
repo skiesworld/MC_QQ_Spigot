@@ -127,7 +127,7 @@ public class ParseJsonToEvent {
             if (myBaseComponent.isObfuscated()) tempMessageSeg += ChatColor.MAGIC;
             if (myBaseComponent.getColor() != null && !myBaseComponent.getColor().isEmpty())
                 tempMessageSeg += ChatColor.of(myBaseComponent.getColor().toUpperCase());
-            else tempMessageSeg += ChatColor.RESET;
+            else tempMessageSeg += ChatColor.WHITE;
             tempMessageSeg += myBaseComponent.getText();
             message.append(tempMessageSeg);
         }
