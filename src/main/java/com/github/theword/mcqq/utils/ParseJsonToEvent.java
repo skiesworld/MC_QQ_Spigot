@@ -21,7 +21,7 @@ public class ParseJsonToEvent {
         // 配置 BaseComponent 基本属性
         msgComponent.setText(myBaseComponent.getText());
         if (myBaseComponent.getColor() != null && !myBaseComponent.getColor().isEmpty())
-            msgComponent.setColor(ChatColor.valueOf(myBaseComponent.getColor()));
+            msgComponent.setColor(ChatColor.valueOf(myBaseComponent.getColor().toUpperCase()));
         else msgComponent.setColor(ChatColor.WHITE);
         msgComponent.setBold(myBaseComponent.isBold());
         msgComponent.setItalic(myBaseComponent.isItalic());
